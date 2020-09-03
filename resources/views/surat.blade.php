@@ -12,9 +12,9 @@
         <font size="2">Jl raya kota lama nomer 25 sleman</font>
     </center></td>
     </tr>
-   <hr>
+<hr>
 </table>
-<br>
+
 <table align="center" border="">
     <tr>
         <td><b>Surat Pengantar {{ $pengajuan->kategori->nama }}</b><hr></td>
@@ -89,7 +89,7 @@
 <table align="right" border="">
     <tr><td height="400"></td></tr>
     <tr>
-        <td>Pada Tanggal {{ now() }}</td>
+        <td>Yogyakarta, {{ tgl_indo(Carbon\Carbon::parse('12-06-2020')->format('Y-m-d')) }}</td>
     </tr>
     <tr>
         <td>Kepala Desa Maju Mundur</td>

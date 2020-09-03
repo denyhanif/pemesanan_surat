@@ -6,11 +6,15 @@ use App\DataPengajuan;
 use App\KategoriSurat;
 use App\Mail\NotifJadi;
 use App\Mail\NotifVerifikasi;
+use App\Mail\NotifTolak;
+use yajra\Datatables\Datatables;
 use App\Pesanan;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use PDF;
+use Illuminate\Support\Facades\View;
+
 
 class HomeController extends Controller
 {
@@ -24,11 +28,6 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $kategori = KategoriSurat::get();
@@ -52,10 +51,8 @@ class HomeController extends Controller
     {
         $idpesan = $request->id_pesanan;
         $idpengaju = $request->id_pengaju;
-
         $pesanan = Pesanan::find($idpesan);
         $pengajuan = DataPengajuan::with(['kategori', 'warga'])->find($idpengaju);
-
         if(!empty($pengajuan->warga->email))
         {
             Mail::to($pengajuan->warga->email)->send(new NotifVerifikasi($pengajuan));
@@ -65,10 +62,36 @@ class HomeController extends Controller
         $pesanan->update([
             'tanggal_verifikasi' => now(),
             'status' => 1,
+        
+            
         ]);
         
         return redirect()->back()->with(['success' => 'Data Diverifikasi']);
         
+    }
+
+    public function tolak(Request $request){
+        // $idpesan = $request->id_pesanan;
+        // $idpengaju = $request->id_pengaju;
+
+
+        $id= $request->idpesantolak;
+        //dd($request->all());
+        $pesanan = Pesanan::find($id);
+        //dd($pesanan->pengajuan);
+        $pengajuan = DataPengajuan::with(['kategori','warga','pesanan'])->find($id);
+        
+        
+        
+        if(!empty($pengajuan->warga->email)){
+            Mail::to($pengajuan->warga->email)->send( new NotifTolak($pengajuan));
+        }
+    
+        $pesanan->update([
+            'status'=>3,
+        ]);
+
+        return redirect()->back()->with(['sussess'=>'Data DiTolak']);
     }
 
     public function print($id)
@@ -128,7 +151,7 @@ class HomeController extends Controller
             'nomer_pegawai' => $request->nomor_pegawai,
             'nama' => $request->nama_pegawai,
             'email' => $request->email,
-            'role' => 'staff',
+            'role' => $request->role,
             'password' => $request->password,
         ]);
         return redirect(route('admin.index'));
@@ -166,4 +189,48 @@ class HomeController extends Controller
         $admin->delete();
         return redirect(route('admin.index')); 
     }
+
+    public function listdatakategori(DataPengajuan $pesanan){
+        //return $pesanan->id;
+        $view = View::make('admin.dashboard.pakde')->with('pesanan',$pesanan)->render();
+
+        return response()->json(['view'=>$view,'nama'=>$pesanan->nama_pemesan],200);
+        //return response ;
+    }
+
+    public function cekPesanan(){
+        return response()->json(['jumlah'=>DataPengajuan::count()],200);
+    }
+
+    public function rekapTahun(Request $request){
+        
+        
+        $pengajuan = DataPengajuan::orderBy('created_at','ASC')->get()->groupBy(function($item){
+            return $item->created_at->format('Y');
+        });
+        $tahun=(array_keys($pengajuan->toArray()));
+        //$filtertahun= $request->get('tahun');
+        //$filterbulan= $request->get('bulan');
+        // if($filtertahun){
+        //     $dataPenhajuan= DataPengajuan::where('created_at',$filtertahun)->paginate(10);
+        // }
+
+
+        return view('admin.rekap.rekapTahun', compact('tahun'));
+
+    }
+    public function rekapdata(Request $request){
+        $pengajuan = DataPengajuan::with(['kategori','pesanan','warga']);
+
+        if($request->tahun != 'all'){
+            $pengajuan= $pengajuan->whereYear('created_at',$request->tahun);
+        }
+        if($request->bulan != 'all'){
+            $pengajuan= $pengajuan->whereMonth('created_at',$request->bulan);
+        }
+
+        return Datatables::of($pengajuan)->make();
+        
+    }
+    
 }

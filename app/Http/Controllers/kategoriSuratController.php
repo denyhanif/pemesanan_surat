@@ -45,21 +45,25 @@ class kategoriSuratController extends Controller
         $data= $input['data'];
         //dd($input['data']);
         $data['nama']= array_map(function($data){       
-                                                return strtolower(trim($data));
-                                                //    return $data;
-                                                        },$data['nama']);
+        return strtolower(trim($data));
+        //return $data;
+        },$data['nama']);
 
         $input['data']= $data;
         $validator = 
         Validator::make($input, [
             'kode_surat' => 'required',
+            'kop_surat'=>'required',
+            'nama_ttd'=>'required',
+            'jabatan_ttd'=>'required',
+            'nomor_pegawai_ttd'=>'required',
             'nama_kategori' => 'required',
             'paragraf_awal' => 'required',
             'paragraf_akhir' => 'required',
             'data.nama.*'=>'required|string|distinct',
             'data.type.*'=>'required|string|in:date,string,numeric',
         ], [
-            'data.nama.*.required'=>'data yang anda masukkan salah',
+            'data.nama.*.required'=>'kolom harus di isi',
             'data.nama.*.string'=>'lalala'
         ])->validate();
         ;
@@ -90,6 +94,10 @@ class kategoriSuratController extends Controller
         $kategori = KategoriSurat::create([
             'nama' => $input['nama_kategori'],
             'kode_surat' => $input['kode_surat'],
+            'kop_surat'=>$input['kop_surat'],
+            'nama_ttd'=>$input['nama_ttd'],
+            'jabatan_ttd'=>$input['jabatan_ttd'],
+            'nomor_pegawai_ttd'=>$input['nomor_pegawai_ttd'],
             'paragraf_awal' => $input['paragraf_awal'],
             'paragraf_akhir' => $input['paragraf_akhir'],
             //'data_template'=>$request->data,
@@ -147,6 +155,10 @@ class kategoriSuratController extends Controller
         Validator::make($input, [
             'kode_surat' => 'required',
             'nama_kategori' => 'required',
+            'nama_ttd'=>'required',
+            'jabatan_ttd'=>'required',
+            'nomor_pegawai_ttd'=>'required',
+            'nama_kategori' => 'required',
             'paragraf_awal' => 'required',
             'paragraf_akhir' => 'required',
             'data.nama.*'=>'required|string|distinct',
@@ -183,6 +195,10 @@ class kategoriSuratController extends Controller
         $kategori->update([
             'nama' => $input['nama_kategori'],
             'kode_surat' => $input['kode_surat'],
+            'kop_surat'=>$input['kop_surat'],
+            'nama_ttd'=>$input['nama_ttd'],
+            'jabatan_ttd'=>$input['jabatan_ttd'],
+            'nomor_pegawai_ttd'=>$input['nomor_pegawai_ttd'],
             'paragraf_awal' => $input['paragraf_awal'],
             'paragraf_akhir' => $input['paragraf_akhir'],
             //'data_template'=>$request->data,

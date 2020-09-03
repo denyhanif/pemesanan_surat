@@ -2,8 +2,8 @@
 
 @section('content')
       <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Kategori Surat</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-2">
+        <h1 class="h3 mb-2 text-gray-800 justify-content-start">Data Kategori Surat</h1>
     </div>
 
     <div class="row mb-2">

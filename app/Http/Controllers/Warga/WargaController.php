@@ -6,9 +6,13 @@ use App\DataPengajuan;
 use App\Http\Controllers\Controller;
 use App\KategoriSurat;
 use App\Pesanan;
+use Illuminate\Support\Facades\Validator;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\View;
+
 
 class WargaController extends Controller
 {
@@ -22,48 +26,97 @@ class WargaController extends Controller
 
     public function pengajuanstore(Request $request)
     {
-        $request->validate([
-            'id_kategori' => 'required',
-            'nama' => 'required',
-            'jenis_kelamin' => 'required',
-            'tempat_lahir' => 'required',
-            'tanggal_lahir' => 'required',
-            'nik' => 'required',
-            'alamat' => 'required',
-            'pekerjaan' => 'required',
-            'status' => 'required',
-            'agama' => 'required',
-            'berkas' => 'required',
-        ]);
+        $request->validate(['nama'=>'required|string']);//////
 
-        if($request->has('berkas'))
-        {
-            $berkas = $request->berkas;
-            $new_berkas = time() . $berkas->getClientOriginalName();
-            $berkas->storeAs('public/berkaswarga', $new_berkas);
+        $kategori = KategoriSurat::find($request->id_kategori);
+        //dd(collect(json_decode($kategori->data_template)));
+        $data = json_decode($kategori->data_template,true);
+        
+        $vali = collect($data['nama'])->combine($data['type'])->toJson();
+        //dd($validate);
+        $val =Validator::make($request->all(),json_decode($vali,true));
+        //dd($val);
+        $val->validate();
 
-            $pengajuan = DataPengajuan::create([
-                'kategori_surat_id' => $request->id_kategori,
+        // if($request->has('berkas'))
+        // {
+        //     $berkas = $request->berkas;
+        //     $new_berkas = time() . $berkas->getClientOriginalName();
+        //     $berkas->storeAs('public/berkaswarga', $new_berkas);
+
+        //     $pengajuan = DataPengajuan::create([
+        //         'kategori_surat_id' => $request->id_kategori,
+        //         'nama_pemesan' => $request->nama,
+        //         'jenis_kelamin' => $request->jenis_kelamin,
+        //         'tempat_lahir' => $request->tempat_lahir,
+        //         'tanggal_lahir' => $request->tanggal_lahir,
+        //         'nik' => $request->nik,
+        //         'alamat' => $request->alamat,
+        //         'pekerjaan' => $request->pekerjaan,
+        //         'status_perkawinan' => $request->status,
+        //         'agama' => $request->agama,
+        //         'berkas' => $new_berkas,
+        //     ]);
+        // }
+        $pengajuan = DataPengajuan::create([
+                'data'=>json_encode(collect($data['nama'])->combine($request->only($data['nama']))),
+                'kategori_surat_id'=>$request->id_kategori,
                 'warga_id' => Auth::guard('warga')->id(),
-                'nama_pemesan' => $request->nama,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'tempat_lahir' => $request->tempat_lahir,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'nik' => $request->nik,
-                'alamat' => $request->alamat,
-                'pekerjaan' => $request->pekerjaan,
-                'status_perkawinan' => $request->status,
-                'agama' => $request->agama,
-                'berkas' => $new_berkas,
-            ]);
-        }
+
+                'jenis_kelamin'=> 'pria',
+                'status_perkawinan'=>'kawin',
+                'agama'=>'islam',
+                'nama_pemesan'=> $request->nama,////
+                    
+        ]);
 
         $pesanan = Pesanan::create([
             'data_pengajuan_id' => $pengajuan->id,
             'nomer_surat' => Str::random(3) . '-' . time(),
             'tanggal_pesan' => now(),
         ]);
-         return redirect(route('warga.riwayat'));
+        // $request->validate([
+        //     'id_kategori' => 'required',
+        //     'nama' => 'required',
+        //     'jenis_kelamin' => 'required',
+        //     'tempat_lahir' => 'required',
+        //     'tanggal_lahir' => 'required',
+        //     'nik' => 'required',
+        //     'alamat' => 'required',
+        //     'pekerjaan' => 'required',
+        //     'status' => 'required',
+        //     'agama' => 'required',
+        //     'berkas' => 'required',
+        // ]);
+
+        // if($request->has('berkas'))
+        // {
+        //     $berkas = $request->berkas;
+        //     $new_berkas = time() . $berkas->getClientOriginalName();
+        //     $berkas->storeAs('public/berkaswarga', $new_berkas);
+
+        //     $pengajuan = DataPengajuan::create([
+        //         'kategori_surat_id' => $request->id_kategori,
+        //         'warga_id' => Auth::guard('warga')->id(),
+        //         'nama_pemesan' => $request->nama,
+        //         'jenis_kelamin' => $request->jenis_kelamin,
+        //         'tempat_lahir' => $request->tempat_lahir,
+        //         'tanggal_lahir' => $request->tanggal_lahir,
+        //         'nik' => $request->nik,
+        //         'alamat' => $request->alamat,
+        //         'pekerjaan' => $request->pekerjaan,
+        //         'status_perkawinan' => $request->status,
+        //         'agama' => $request->agama,
+        //         'berkas' => $new_berkas,
+        //     ]);
+        // }
+
+        // $pesanan = Pesanan::create([
+        //     'data_pengajuan_id' => $pengajuan->id,
+        //     'nomer_surat' => Str::random(3) . '-' . time(),
+        //     'tanggal_pesan' => now(),
+        // ]);
+        return redirect(route('warga.dashboard'));
 
     }
 
@@ -79,8 +132,10 @@ class WargaController extends Controller
         return redirect(route('warga.login'));
     }
 
-    public function labelPengajuan(){
-        
+    public function labelPengajuan(KategoriSurat $id){
+        $view = View::make('admin.kategori.pakde')->with('kategori',$id)->render();
+        return response()->json(['view'=>$view],200);
 
     }
+     
 }

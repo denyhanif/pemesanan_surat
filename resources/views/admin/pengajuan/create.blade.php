@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-1">
         <h1 class="h3 mb-0 text-gray-800">Tambah Data Pengajuan</h1>
     </div>
 
@@ -23,7 +23,7 @@
                         </select>
                     </div>
                     
-                      <div class="form-group col-md-8">
+                    <div class="form-group col-md-8">
                         <label for="inputState">Nama Pemesan Surat</label>
                         <input class="form-control" type="text" name="nama" >
                     

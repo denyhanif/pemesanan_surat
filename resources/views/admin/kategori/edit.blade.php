@@ -33,6 +33,35 @@
                                 </span>
                                 @enderror
                         </div>
+                        <div class="form-group">
+                            <label class="" for="formGroupExampleInput">Nama Pegawai</label>
+                            <input type="text" class="form-control @error('nama_ttd') is-invalid @enderror" 
+                                name="nama_ttd" id="formGroupExampleInput" 
+                                value="{{ $kategori->nama_ttd }}">
+                                @error('nama_ttd')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="text-sm" for="formGroupExampleInput">Jabatan</label>
+                            <input type="text" class="form-control @error('jabatan_ttd') is-invalid @enderror" name="jabatan_ttd" id="formGroupExampleInput"  value="{{ $kategori->jabatan_ttd }}">
+                                @error('jabatan_ttd')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="text-sm" for="formGroupExampleInput">NIP</label>
+                            <input type="text" class="form-control @error('nomor_pegawai_ttd') is-invalid @enderror" name="nomor_pegawai_ttd" id="formGroupExampleInput"  value="{{ $kategori->nomor_pegawai_ttd }}">
+                                @error('nomor_pegawai_ttd')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>
                         <div id="data-wrap">
                             <div id="input-wrap">
                                 {{--  @error('data.*')
@@ -137,6 +166,13 @@
     
                     <div class="col-md-8">
                         <div class="form-group">
+                            <label>Kop surat</label>
+                            <textarea name="kop_surat" id="kop_surat" class="form-control @error('kop_surat') is-invalid @enderror" cols="30" rows="10">{{ $kategori->kop_surat }}</textarea>
+                                @error('kop_surat')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                        </div>
+                        <div class="form-group">
                             <label>Isi Paragraf Awal</label>
                             <textarea name="paragraf_awal" id="paragraf_awal" class="form-control @error('paragraf_awal') is-invalid @enderror" cols="30" rows="10">{{ $kategori->paragraf_awal }}</textarea>
                                 @error('paragraf_awal')
@@ -161,15 +197,48 @@
         </div>
     </div>
 
-    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
 
+     {{--  <script>
+        CKEDITOR.replace('kop_surat');
+    </script>  --}}
     <script>
+            ClassicEditor
+                    .create( document.querySelector( '#kop_surat' ) )
+                    .then( editor => {
+                     console.log( editor );
+                        } )
+                    .catch( error => {
+                    console.error( error );
+                    } );
+    </script>
+    <script>
+            ClassicEditor
+                    .create( document.querySelector( '#paragraf_awal' ) )
+                    .then( editor => {
+                     console.log( editor );
+                        } )
+                    .catch( error => {
+                    console.error( error );
+                    } );
+    </script>
+    <script>
+            ClassicEditor
+                    .create( document.querySelector( '#paragraf_akhir' ) )
+                    .then( editor => {
+                     console.log( editor );
+                        } )
+                    .catch( error => {
+                    console.error( error );
+                    } );
+    </script>
+    {{--  <script>
         CKEDITOR.replace('paragraf_awal');
     </script>
 
     <script>
         CKEDITOR.replace('paragraf_akhir');
-    </script>
+    </script>  --}}
     
 @endsection
 @section('js')

@@ -71,6 +71,18 @@
           </div>
         </li>
 
+        <li class="nav-item {{ Request::path() === 'Administrator/kategori' ? 'active' : '' }}">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Rekap </span>
+          </a>
+          <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="{{ route('rekap.tahun') }}">Rekap Tahun</a>
+             
+            </div>
+          </div>
+        </li>
         <li class="nav-item">
          
             <a class="nav-link collapsed" href="{{ route('logout') }}"
@@ -79,6 +91,9 @@
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Logout</span>
             </a>
+
+            
+           
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
@@ -104,6 +119,8 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Pesan Surat</span></a>
         </li>
+
+        
   
         <li class="nav-item">
           <a class="nav-link" href="{{ route('warga.riwayat') }}">

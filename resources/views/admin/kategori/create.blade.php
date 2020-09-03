@@ -3,13 +3,13 @@
 @section('content')
 
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-1">
         <h1 class="h3 mb-0 text-gray-800">Tambah Kategori Surat</h1>
     </div>
 
     <div class="row">
-        <div class="col-md-12 card shadow mb-4">
-            <form class="mt-3 mb-2" action="{{ route('kategori.store') }}" method="POST">
+        <div class="col-md-12 card shadow mb-1">
+            <form class="mt-3 mb-2 small" action="{{ route('kategori.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-4">
@@ -21,9 +21,9 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
-                         </div>
+                        </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput">Nama Kategori Surat</label>
+                            <label class="text-sm" for="formGroupExampleInput">Nama Kategori Surat</label>
                             <input type="text" class="form-control @error('nama_kategori') is-invalid @enderror" name="nama_kategori" id="formGroupExampleInput" placeholder="Masukkan Nama Kategori Surat" value="{{ old('nama_kategori') }}">
                                 @error('nama_kategori')
                                 <span class="invalid-feedback" role="alert">
@@ -31,6 +31,37 @@
                                 </span>
                                 @enderror
                         </div>
+                        <div class="form-group">
+                            <label class="" for="formGroupExampleInput">Nama Pegawai</label>
+                            <input type="text" class="form-control @error('nama_ttd') is-invalid @enderror" 
+                                name="nama_ttd" id="formGroupExampleInput" 
+                                placeholder="Masukkan Nama Pegawai" 
+                                value="{{ old('nama_ttd') }}">
+                                @error('nama_ttd')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="text-sm" for="formGroupExampleInput">Jabatan</label>
+                            <input type="text" class="form-control @error('jabatan_ttd') is-invalid @enderror" name="jabatan_ttd" id="formGroupExampleInput" placeholder="Masukkan Jabatan" value="{{ old('jabatan_ttd') }}">
+                                @error('jabatan_ttd')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="text-sm" for="formGroupExampleInput">NIP</label>
+                            <input type="text" class="form-control @error('nomor_pegawai_ttd') is-invalid @enderror" name="nomor_pegawai_ttd" id="formGroupExampleInput" placeholder="Masukkan NIP" value="{{ old('nomor_pegawai_ttd') }}">
+                                @error('nomor_pegawai_ttd')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>
+                        
                         <div id="data-wrap">
                             <div id="input-wrap">
                             
@@ -76,6 +107,13 @@
     
                     <div class="col-md-8">
                         <div class="form-group">
+                            <label>Kop surat</label>
+                            <textarea name="kop_surat" id="kop_surat" class="form-control @error('kop_surat') is-invalid @enderror" cols="30" rows="10" placeholder="Masukan Kop Surat">{{ old('kop_surat') }}</textarea>
+                                @error('kop_surat')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                        </div>
+                        <div class="form-group">
                             <label>Isi Paragraf Awal</label>
                             <textarea name="paragraf_awal" id="paragraf_awal" class="form-control @error('paragraf_awal') is-invalid @enderror" cols="30" rows="10" placeholder="Masukan Paragraf Awal">{{ old('paragraf_awal') }}</textarea>
                                 @error('paragraf_awal')
@@ -102,9 +140,11 @@
     <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 
     <script>
+        CKEDITOR.replace('kop_surat');
+    </script>
+    <script>
         CKEDITOR.replace('paragraf_awal');
     </script>
-
     <script>
         CKEDITOR.replace('paragraf_akhir');
     </script>

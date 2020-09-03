@@ -31,6 +31,8 @@ Route::group(['prefix' => 'Administrator', 'middleware' => 'auth'], function () 
     Route::resource('pengajuan', 'dataPengajuanController');
     Route::get('/riwayat', 'HomeController@riwayat')->name('riwayat.pengajuan');
     Route::get('/list-kategori/{id}', 'HomeController@listkategori')->name('list.kategori');
+    Route::get('/list-kategori/data/{pesanan}', 'HomeController@listdatakategori')->name('list.kategori.data');
+    Route::get('/cekpesanan','HomeController@cekPesanan')->name('cek.pesanan');
     Route::get('/list-pegawai', 'HomeController@admin')->name('admin.index');
     Route::post('/verifikasi', 'HomeController@verifikasi')->name('send.verifikasi');
     Route::get('/print/{id}', 'HomeController@print')->name('print.surat');
@@ -40,6 +42,14 @@ Route::group(['prefix' => 'Administrator', 'middleware' => 'auth'], function () 
     Route::get('/admin/{id}', 'HomeController@editadmin')->name('admin.edit');
     Route::put('/admin/update/{id}', 'HomeController@adminupdate')->name('admin.update');
     Route::delete('/admin/{id}', 'HomeController@destroyadmin')->name('admin.destroy');
+
+    Route::post('/verifikasi', 'HomeController@verifikasi')->name('send.verifikasi');
+    Route::post('/tolak', 'HomeController@tolak')->name('tolak');
+
+    Route::get('/rekap-tahun', 'HomeController@rekapTahun')->name('rekap.tahun');
+    Route::post('/rekap-data', 'HomeController@rekapdata')->name('rekap.data');
+
+
 });
 
 Route::group(['prefix' => 'member', 'namespace' => 'Warga'], function() {
@@ -47,6 +57,7 @@ Route::group(['prefix' => 'member', 'namespace' => 'Warga'], function() {
     Route::get('/registrasi', 'LoginController@registrasiForm')->name('warga.register');
     Route::post('/registrasi', 'LoginController@registrasistore')->name('registrasi.store');
     Route::post('/login', 'LoginController@login')->name('login.proses');
+    
 
 
     Route::group(['middleware' => 'warga'], function () {
@@ -54,5 +65,7 @@ Route::group(['prefix' => 'member', 'namespace' => 'Warga'], function() {
         Route::get('logout', 'WargaController@logout')->name('warga.logout');
         Route::post('pengajuan', 'WargaController@pengajuanstore')->name('warga.pengajuan.store');
         Route::get('riwayat', 'WargaController@riwayat')->name('warga.riwayat');
+        Route::get('kategori/data/{id}','WargaController@labelPengajuan')->name('load.kategori.data');//  m
+
     });
 });

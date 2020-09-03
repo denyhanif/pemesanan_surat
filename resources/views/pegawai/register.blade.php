@@ -36,6 +36,20 @@
               </span>
           @enderror
             </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Jabatan Pegawai</label>
+                <select name="role" class="form-control">
+                    <option>Pilih Jabatan</option>
+                    <option value="kades">Kades</option>
+                    <option value="carik">Carik</option>
+                    <option value="bayan">Bayan</option>
+                  </select>
+                @error('role')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+              </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Password</label>

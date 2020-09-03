@@ -17,12 +17,14 @@
 
   <!-- Custom styles for this template-->
   <link href="{{ url('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.css" rel="stylesheet">
   @yield('css')
 
 
 </head>
 
-<body id="page-top">
+<body id="page-top" data-jumlah="{{ App\DataPengajuan::count() }}"> 
+
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -100,13 +102,42 @@
   <!-- Custom scripts for all pages-->
   <script src="{{ url('admin/js/sb-admin-2.min.js') }}"></script>
 
-  <!-- Page level plugins -->
-  <script src="{{ url('admin/vendor/chart.js/Chart.min.js') }}"></script>
+  
 
-  <!-- Page level custom scripts -->
-  <script src="{{ url('admin/js/demo/chart-area-demo.js') }}"></script>
-  <script src="{{ url('admin/js/demo/chart-pie-demo.js') }}"></script>
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.js"></script>
+
+
+  
+
+  
+ 
+ <script>
+    function update(){
+      $.ajax({
+              url: "{{ url('Administrator/cekpesanan') }}",
+              method: 'get',
+              success: function(data){
+                //$('#data-template-wrap').html(data.view)
+                console.log(data);
+                current= $('body').data('jumlah');
+                if(current!=data.jumlah){
+                  $('body').data('jumlah',data.jumlah);
+                  new PNotify({
+                    title: 'Simple Notification',
+                    text: 'Hey, I\'m a simple notification.'
+                });
+                }
+                
+              },
+              
+            });
+    }
+    setInterval(update, 3000);
+  </script>
   @yield('js')
+
+
 
 </body>
 

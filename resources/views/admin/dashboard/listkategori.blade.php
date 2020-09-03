@@ -1,8 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="d-sm-flex align-items-center justify-content-between mb-2">
     <h1 class="h3 mb-0 text-gray-800">List Kategori</h1>
+            <input class="ml-1 mb-2 form-control col-md-4" readonly type="text" value="Dashboard>{{ $title->nama }}">
+
 </div>
 @if (session('success')) 
 <div class="alert alert-success alert-dismissible fade show col-md-6" role="alert">
@@ -22,7 +24,7 @@
 @endif
 
     <div class="row">
-        <input class="ml-1 mb-2 form-control col-md-4" readonly type="text" value="Dashboard>{{ $title->nama }}">
+        {{-- <input class="ml-1 mb-2 form-control col-md-4" readonly type="text" value="Dashboard>{{ $title->nama }}"> --}}
         <div class="col-md-12 card shadow mb-4">
             <table class="table table-hover">
                 <thead>
@@ -106,8 +108,9 @@
         </button>
       </div>
       <div class="modal-body">
-          <input type="text" class="form-control col-md-6 mb-2" readonly id="title">
-          <table class="table table-bordered">
+          <input type="text" class="form-control col-md-6 mb-2"  id="nama_pemesan">
+
+          {{--  <table class="table table-bordered">
             <tbody>
               <div class="col-md-12 text-center">
                 <h5>Kategori Surat</h5>
@@ -126,16 +129,31 @@
                 <td><span id="alamat"></span></td>
               </tr>
             </tbody>
-          </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <form action="{{ route('send.verifikasi') }}" method="POST">
+          </table>  --}}
+          <div class="row">
+          <form action="{{ route('send.verifikasi') }}" method="POST">
           @csrf
           <input type="hidden" name="id_pesanan" id="idpesan">
           <input type="hidden" name="id_pengaju" id="idpengaju">
+          <div class="row "id="modal-pesanan">
+
+          </div>
           <button type="submit" class="btn btn-primary">Verifikasi Data</button>
         </form>
+        <form action="{{ route('tolak') }}" method="POST">
+          @csrf
+          <input type="hidden" name="idpesantolak" id="idtolak">
+          <button type="submit" class="btn btn-danger">Tolak</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+          </div>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        
       </div>
     </div>
   </div>
@@ -149,20 +167,33 @@
 <script>
   $(document).ready(function() {
     $(document).on('click', '#set-verifikasi', function() {
-      var title = $(this).data('title');
+      var id = $(this).data('idpesan')
+            $.ajax({
+              url: "{{ url('Administrator/list-kategori/data/') }}/"+id,
+              method: 'get',
+              success: function(data){
+                //$('#data-template-wrap').html(data.view)
+                console.log(data);
+                $('#modal-pesanan').html(data.view);
+                $('#nama_pemesan').val(data.nama);//statis
+              },
+              
+            });
+            //$('#idpengajutolak').val(idpengaju);
+     //* var title = $(this).data('title');
       var idpesan = $(this).data('idpesan');
-      var idpengaju = $(this).data('idpengaju');
-      var kategori = $(this).data('kategori');
-      var nama = $(this).data('nama');
-      var nik = $(this).data('nik');
-      var alamat = $(this).data('alamat');
-      $('#title').val(title);
+      var idtolak = $(this).data('idtolak');
+      //var kategori = $(this).data('kategori');
+      //var nama = $(this).data('nama');
+      //var nik = $(this).data('nik');
+      //var alamat = $(this).data('alamat');
+      //$('#title').val(title);
       $('#idpesan').val(idpesan);
-      $('#idpengaju').val(idpengaju);
-      $('#kategori').text(kategori);
-      $('#nama').text(nama);
-      $('#nik').text(nik);
-      $('#alamat').text(alamat);
+      $('#idtolak').val(idpesan);
+      //$('#kategori').text(kategori);
+     // $('#nama').text(nama);
+     // $('#nik').text(nik);
+     // $('#alamat').text(alamat);*//
     });
   });
 </script>
