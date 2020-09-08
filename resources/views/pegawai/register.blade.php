@@ -41,8 +41,8 @@
                 <select name="role" class="form-control">
                     <option>Pilih Jabatan</option>
                     <option value="kades">Kades</option>
-                    <option value="carik">Carik</option>
-                    <option value="bayan">Bayan</option>
+                    <option value="admin">Admin</option>
+                    <option value="staff">Staff</option>
                   </select>
                 @error('role')
                 <span class="invalid-feedback" role="alert">

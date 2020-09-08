@@ -89,14 +89,17 @@
 <table align="right" border="">
     <tr><td height="400"></td></tr>
     <tr>
-        <td>Yogyakarta, {{ tgl_indo(Carbon\Carbon::parse('12-06-2020')->format('Y-m-d')) }}</td>
+        <td>Yogyakarta, {{ tgl_indo(Carbon\Carbon::now()->format('Y-m-d')) }}</td>
     </tr>
     <tr>
-        <td>Kepala Desa Maju Mundur</td>
+        <td>!!$pengajuan->kategori->jabatan_ttd</td>
     </tr>
     <tr><td height="50"></td></tr>
     <tr>
-        <td><b>Sono Kuncoro</b></td>
+        <td><b>{ !!$pengajuan->kategori->nama_ttd}</b></td>
+    </tr>
+    <tr>
+        <td><b>{ !!$pengajuan->kategori->nomer_pegawai_ttd}</b></td>
     </tr>
 </table>
 <body>

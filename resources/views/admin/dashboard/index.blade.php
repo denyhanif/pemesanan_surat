@@ -13,11 +13,13 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><h6>{{ $row->nama }}</h6></div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Jumlah : {{ $row->pengajuan->count() }}</div>
+                        <div class="h6 mb-0 font-weight-bold text-gray-800"> proses : {{ $row->pengajuan()->whereHas('pesanan',function($q){
+            return $q->where('status',0);
+        })->count() }}</div>
                         </div>
                     </div>
                     <div class="text-right">
-                        <a class="btn btn-primary" href="{{ route('list.kategori', $row->id) }}">Detail</a>
+                        <a class="btn btn-primary " href="{{ route('list.kategori', $row->id) }}">Detail</a>
                     </div>
                 </div>
             </div>

@@ -43,6 +43,7 @@ Route::group(['prefix' => 'Administrator', 'middleware' => 'auth'], function () 
     Route::put('/admin/update/{id}', 'HomeController@adminupdate')->name('admin.update');
     Route::delete('/admin/{id}', 'HomeController@destroyadmin')->name('admin.destroy');
 
+    Route::get('/ambil/{id}', 'HomeController@ambil')->name('ambil');
     Route::post('/verifikasi', 'HomeController@verifikasi')->name('send.verifikasi');
     Route::post('/tolak', 'HomeController@tolak')->name('tolak');
 

@@ -43,45 +43,51 @@
                     @php
                         $no =1;
                     @endphp
-                    @forelse ($pengajuan as $row)       
-                    <tr>
-                      <th scope="row">{{ $no++ }}</th>
-                      <td>{{ $row->nama_pemesan }}</td>
-                      <td>{{ $row->pesanan->tanggal_pesan }}</td>
-                      <td>
-                          @if ($row->pesanan->tanggal_verifikasi == null)
-                              {{ 'belum diverifikasi' }}
-                          @else
-                              {{ $row->pesanan->tanggal_verifikasi }}
-                          @endif
-                      </td>
-                      <td>
-                        @if ($row->pesanan->tanggal_jadi == null)
-                        {{ 'belum jadi' }}
-                      @else
-                        {{ $row->pesanan->tanggal_jadi }}
-                      @endif
-                      </td>
-                      <td>{{ $row->pesanan->nomer_surat }}</td>
-                      <td>{!! $row->status_label !!}</td>
-                      <td>
-                        @if ($row->pesanan->status == 0)
-                          <a id="set-verifikasi" class="btn btn-warning" data-toggle="modal" data-target="#modal-detail"
-                          data-idpesan="{{ $row->pesanan->id }}"
-                          data-idpengaju="{{ $row->id }}"
-                          data-title="Dashboard>{{ $title->nama }}>Verifikasi"
-                          data-kategori="{{ $title->nama }}"
-                          data-nama="{{ $row->nama_pemesan }}"
-                          data-nik="{{ $row->nik }}"
-                          data-alamat="{{ $row->alamat }}">
-                            <i class="fa fa-eye"></i> Verifikasi
-                          </a>
-                        @else($row->pesanan->status == 1)
-                            <a target="_blank" class="btn btn-primary" href="{{ route('print.surat', $row->id) }}">Print</a>
-                            <a class="btn btn-danger" href="{{ route('send.jadi', $row->id) }}">Jadi</a>
+                    @forelse ($pengajuan as $row)  
+                        @if($row->pesanan->status !=4)
+                                          <tr>
+                                <th scope="row">{{ $no++ }}</th>
+                                <td>{{ $row->nama_pemesan }}</td>
+                                <td>{{ $row->pesanan->tanggal_pesan }}</td>
+                                <td>
+                                    @if ($row->pesanan->tanggal_verifikasi == null)
+                                        {{ 'belum diverifikasi' }}
+                                    @else
+                                        {{ $row->pesanan->tanggal_verifikasi }}
+                                    @endif
+                                </td>
+                                <td>
+                                  @if ($row->pesanan->tanggal_jadi == null)
+                                  {{ 'belum jadi' }}
+                                @else
+                                  {{ $row->pesanan->tanggal_jadi }}
+                                @endif
+                                </td>
+                                <td>{{ $row->pesanan->nomer_surat }}</td>
+                                <td>{!! $row->status_label !!}</td>
+                                <td>
+                                  @if ($row->pesanan->status == 0)
+                                    <a id="set-verifikasi" class="btn btn-warning" data-toggle="modal" data-target="#modal-detail"
+                                    data-idpesan="{{ $row->pesanan->id }}"
+                                    data-idpengaju="{{ $row->id }}"
+                                    data-title="Dashboard>{{ $title->nama }}>Verifikasi"
+                                    data-kategori="{{ $title->nama }}"
+                                    data-nama="{{ $row->nama_pemesan }}"
+                                    data-nik="{{ $row->nik }}"
+                                    data-alamat="{{ $row->alamat }}">
+                                      <i class="fa fa-eye"></i> Verifikasi
+                                    </a>
+                                  @elseif($row->pesanan->status == 1)
+                                      <a target="_blank" class="btn btn-primary" href="{{ route('print.surat', $row->id) }}">Print</a>
+                                      <a class="btn btn-danger" href="{{ route('send.jadi', $row->id) }}">Jadi</a>
+                                      
+                                  @else($row->pesanan->status ==2)
+                                      <a class="btn btn-success" href="{{ route('ambil', $row->id) }}">Ambil</a>
+                                  @endif
+                                </td>
+                              </tr>
                         @endif
-                      </td>
-                    </tr>
+                    
                     @empty
                     <tr>
                         <td colspan="8">Belum Ada Data</td>
@@ -130,31 +136,31 @@
               </tr>
             </tbody>
           </table>  --}}
-          <div class="row">
-          <form action="{{ route('send.verifikasi') }}" method="POST">
-          @csrf
-          <input type="hidden" name="id_pesanan" id="idpesan">
-          <input type="hidden" name="id_pengaju" id="idpengaju">
-          <div class="row "id="modal-pesanan">
-
-          </div>
-          <button type="submit" class="btn btn-primary">Verifikasi Data</button>
-        </form>
-        <form action="{{ route('tolak') }}" method="POST">
-          @csrf
-          <input type="hidden" name="idpesantolak" id="idtolak">
-          <button type="submit" class="btn btn-danger">Tolak</button>
-        </form>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        
-          </div>
           
+            <div class="row "id="modal-pesanan">
+
+            </div>
       </div>
-      <div class="modal-footer">
+      <div class=" modal-footer ">
+              <form action="{{ route('send.verifikasi') }}" method="POST">
+                  @csrf
+                  <input type="hidden" name="id_pesanan" id="idpesan">
+                  <input type="hidden" name="id_pengaju" id="idpengaju">
+                
+                  <button type="submit" class="btn btn-primary">Verifikasi Data</button>
+              </form>
+              <form action="{{ route('tolak') }}" method="POST">
+                @csrf
+                <input type="hidden" name="idpesantolak" id="idtolak">
+                <button type="submit" class="btn btn-danger">Tolak</button>
+              </form>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>       
+          </div>
+      {{--  <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         
         
-      </div>
+      </div>  --}}
     </div>
   </div>
 </div>

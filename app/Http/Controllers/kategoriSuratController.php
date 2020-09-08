@@ -42,29 +42,40 @@ class kategoriSuratController extends Controller
 
         $input= $request->all();
         //dd($input);
-        $data= $input['data'];
-        //dd($input['data']);
-        $data['nama']= array_map(function($data){       
+        if(array_key_exists('data',$input)){
+            $data= $input['data'];
+            $data['nama']= array_map(function($data){       
         return strtolower(trim($data));
         //return $data;
-        },$data['nama']);
+        },$data['nama']);//data[]
 
         $input['data']= $data;
+        }
+    
+        //dd($input['data']);
+        //aray_map->mengubah semua value di araray
+        //trim()->menghapu spasi pada string
+        //$data['nama'] untuk mengubah isi format array mjd tanpa spasi dan hurufkcil  
         $validator = 
         Validator::make($input, [
             'kode_surat' => 'required',
             'kop_surat'=>'required',
             'nama_ttd'=>'required',
             'jabatan_ttd'=>'required',
+            'margin_kekanan'=>'required',
+            'margin_atas'=>'required',
+            'margin_bawah'=>'required',
+            'nama_instansi'=>'required',
+            'alamat_instansi'=>'required',
             'nomor_pegawai_ttd'=>'required',
             'nama_kategori' => 'required',
             'paragraf_awal' => 'required',
             'paragraf_akhir' => 'required',
-            'data.nama.*'=>'required|string|distinct',
+            'data.nama.*'=>'required|string|distinct',//distinc== mngenali jika ada inputyan yg hurufnya sama
             'data.type.*'=>'required|string|in:date,string,numeric',
         ], [
             'data.nama.*.required'=>'kolom harus di isi',
-            'data.nama.*.string'=>'lalala'
+            'data.nama.*.distinct'=>'ada nama kolom yang sama'
         ])->validate();
         ;
         //dd($request->all());
@@ -96,12 +107,17 @@ class kategoriSuratController extends Controller
             'kode_surat' => $input['kode_surat'],
             'kop_surat'=>$input['kop_surat'],
             'nama_ttd'=>$input['nama_ttd'],
+            'margin_kekanan'=>$input['margin_kekanan'],
+            'margin_atas'=>$input['margin_atas'],
+            'margin_bawah'=>$input['margin_bawah'],
+            'nama_instansi'=>$input['nama_instansi'],
+            'alamat_instansi'=>$input['alamat_instansi'],
             'jabatan_ttd'=>$input['jabatan_ttd'],
             'nomor_pegawai_ttd'=>$input['nomor_pegawai_ttd'],
             'paragraf_awal' => $input['paragraf_awal'],
             'paragraf_akhir' => $input['paragraf_akhir'],
             //'data_template'=>$request->data,
-            'data_template'=> json_encode($input['data']),//
+            'data_template'=>(array_key_exists('data',$input)? json_encode($input['data']) : json_encode(['nama'=>[],'type'=>[]])) ,//
 
         ]);
 
@@ -140,17 +156,19 @@ class kategoriSuratController extends Controller
      */
     public function update(Request $request, $id)
     {
+               // dd($request->all());
+
         $input= $request->all();
         //dd($input);
-        $data= $input['data'];
-        //dd($input['data']);
-        $data['nama']= array_map(function($data){
-        
-            return strtolower(trim($data));
-        
-        //    return $data;
-        },$data['nama']);
+          if(array_key_exists('data',$input)){
+            $data= $input['data'];
+             $data['nama']= array_map(function($data){       
+        return strtolower(trim($data));
+        //return $data;
+        },$data['nama']);//data[]
+
         $input['data']= $data;
+        }
         $validator = 
         Validator::make($input, [
             'kode_surat' => 'required',
@@ -158,14 +176,19 @@ class kategoriSuratController extends Controller
             'nama_ttd'=>'required',
             'jabatan_ttd'=>'required',
             'nomor_pegawai_ttd'=>'required',
+            'margin_kekanan'=>'required',
+            'margin_atas'=>'required',
+            'margin_bawah'=>'required',
+            'nama_instansi'=>'required',
+            'alamat_instansi'=>'required',
             'nama_kategori' => 'required',
             'paragraf_awal' => 'required',
             'paragraf_akhir' => 'required',
             'data.nama.*'=>'required|string|distinct',
             'data.type.*'=>'required|string|in:date,string,numeric',
         ], [
-            'data.nama.*.required'=>'data yang anda masukkan salah',
-            'data.nama.*.string'=>'lalala'
+            'data.nama.*.required'=>'kolom harus di isi',
+            'data.nama.*.distinct'=>'ada nama kolom yang sama'
         ])->validate();
         ;
         //dd($request->all());
@@ -201,8 +224,13 @@ class kategoriSuratController extends Controller
             'nomor_pegawai_ttd'=>$input['nomor_pegawai_ttd'],
             'paragraf_awal' => $input['paragraf_awal'],
             'paragraf_akhir' => $input['paragraf_akhir'],
+            'margin_kekanan'=>$input['margin_kekanan'],
+            'margin_atas'=>$input['margin_atas'],
+            'margin_bawah'=>$input['margin_bawah'],
+            'nama_instansi'=>$input['nama_instansi'],
+            'alamat_instansi'=>$input['alamat_instansi'],
             //'data_template'=>$request->data,
-            'data_template'=> json_encode($input['data']),//
+            'data_template'=>(array_key_exists('data',$input)? json_encode($input['data']) : json_encode(['nama'=>[],'type'=>[]])) ,//
 
         ]);
 

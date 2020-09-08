@@ -16,10 +16,15 @@ class CreateKategoriSuratsTable extends Migration
         Schema::create('kategori_surats', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('kop_surat');
+
             $table->string('kode_surat');
             $table->text('paragraf_awal');
             $table->text('paragraf_akhir');
-            $table->text('data_template');
+            $table->text('nomor_pegawai_ttd');
+            $table->text('jabatan_ttd');
+            $table->text('nama_ttd');
+            $table->text('data_template')->nullable();
             $table->timestamps();
         });
     }

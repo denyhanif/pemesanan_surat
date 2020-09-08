@@ -15,6 +15,15 @@
                 @method('PUT')
                 <div class="row">
                     <div class="col-md-4">
+                        <div class="form-group m-2">
+                            <label class="mb-0" for="formGroupExampleInput">Alamat Instansi</label>
+                            <input type="text" class="form-control mb-1 @error('alamat_instansi') is-invalid @enderror" name="alamat_instansi" id="formGroupExampleInput" placeholder="Masukkan Alamat Instansi" value="{{ $kategori->alamat_instansi }}">
+                                @error('alamat_instansi')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput">Kode Surat</label>
                             <input type="text" class="form-control @error('kode_surat') is-invalid @enderror" name="kode_surat" id="formGroupExampleInput" value="{{ $kategori->kode_surat }}">

@@ -31,12 +31,17 @@ class HomeController extends Controller
     public function index()
     {
         $kategori = KategoriSurat::get();
+        // dd($kategori->first()->pengajuan()->whereHas('pesanan',function($q){
+        //     return $q->where('status',0);
+        // })->get());
+
+        
         return view('admin.dashboard.index', compact('kategori'));
     }
 
     public function listkategori($id)
     {
-        $pengajuan = DataPengajuan::where('kategori_surat_id', $id)->orderBy('created_at', 'DESC')->paginate(10);
+        $pengajuan = DataPengajuan::where('kategori_surat_id', $id)->orderBy('created_at', 'DESC')->get();
         $title = KategoriSurat::find($id);
         return view('admin.dashboard.listkategori', compact('pengajuan', 'title'));
     }
@@ -231,6 +236,18 @@ class HomeController extends Controller
 
         return Datatables::of($pengajuan)->make();
         
+    }
+
+    public function ambil($id)
+    {
+        $pengajuan = DataPengajuan::with(['kategori', 'warga', 'pesanan'])->find($id);
+
+        // dd('berhasil');
+        $pengajuan->pesanan->update([
+            'status' => 4,
+        ]);
+
+        return redirect()->back()->with(['success' => 'DataDiambil']);
     }
     
 }

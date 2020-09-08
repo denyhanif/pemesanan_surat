@@ -29,6 +29,8 @@ class dataPengajuanController extends Controller
     {
         $kategori = KategoriSurat::get();
         return view('admin.pengajuan.create', compact('kategori'));
+        //
+        $pesanan = Pesanan::get();
     }
 
     /**
@@ -80,10 +82,11 @@ class dataPengajuanController extends Controller
                 'nama_pemesan'=> $request->nama,////
                     
         ]);
-
+        $kode= $kategori->kode_surat;
+        //dd($kode);
         $pesanan = Pesanan::create([
             'data_pengajuan_id' => $pengajuan->id,
-            'nomer_surat' => Str::random(3) . '-' . time(),
+            'nomer_surat' => $kode. '-' . now(),
             'tanggal_pesan' => now(),
         ]);
         return redirect(route('riwayat.pengajuan'));
@@ -121,7 +124,7 @@ class dataPengajuanController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $request->validate(['nama'=>'required|string']);//////
+        $request->validate(['nama'=>'required|string']);//////
 
         $kategori = KategoriSurat::find($request->id_kategori);
         //dd(collect(json_decode($kategori->data_template)));
@@ -153,6 +156,8 @@ class dataPengajuanController extends Controller
         //         'berkas' => $new_berkas,
         //     ]);
         // }
+
+        $kode =$kategori->kode;
         $pengajuan = DataPengajuan::create([
                 'data'=>json_encode(collect($data['nama'])->combine($request->only($data['nama']))),
                 'kategori_surat_id'=>$request->id_kategori,
@@ -162,6 +167,7 @@ class dataPengajuanController extends Controller
                 'nama_pemesan'=> $request->nama,////
                     
         ]);
+
 
         $pesanan = Pesanan::create([
             'data_pengajuan_id' => $pengajuan->id,
