@@ -15,10 +15,10 @@ class UserSeeder extends Seeder
     {
         User::create([
             'nomer_pegawai' => 'ATT123',
-            'nama' => 'doni',
-            'email' => 'doni@gmail.com',
+            'nama' => 'deni',
+            'email' => 'deni@gmail.com',
             'password' => 'rahasia',
-            'role' => 'kades'
+            'role' => 'admin'
         ]);
     }
 }

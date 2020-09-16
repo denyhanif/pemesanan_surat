@@ -1,39 +1,37 @@
-<!DOCTYPE html>
+{{--  <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Surat Keterangan</title>
 </head>
-<table border="" align="center">
+<table border="" align="center" style="margin-top: 50px">
     <tr>
-    {{-- <td><img src="{{ asset('admin/logo1.png') }}" width="70" height="70" alt=""></td> --}}
-    <td><center><font size="4">PEMERINTAH KABUPATEN SLEMAN</font><BR>
-        <font size="4">KECAMATAN NGEMPLAK</font><BR>
-        <font size="4">DESA BIMOMARTANI</font><br>
-        <font size="2">Jl raya kota lama nomer 25 sleman</font>
-    </center></td>
+        <td style="margin-top: 0">
+            <center><font size="4" style="font-weight: bold;margin-top: -20px">{!! $pengajuan->kategori->kop_surat !!}</font>
+            
+            <font size="3">{{ $pengajuan->kategori->alamat_instansi }}</font>
+            </center>
+        </td>
     </tr>
 <hr>
 </table>
-
-<table align="center" border="">
+<br>
+<br>
+<table align="center" style="" border="">
     <tr>
         <td><b>Surat Pengantar {{ $pengajuan->kategori->nama }}</b><hr></td>
     </tr>
     <tr>
-        <td><center>Nomer Surat {{ $pengajuan->kategori->kode_surat }} {{ $pengajuan->pesanan->nomer_surat }}</center></td>
+        <td><center>Nomer Surat  {{ $pengajuan->pesanan->nomer_surat }}</center></td>
     </tr>
 </table>
 <br>
-<table align="left" border="">
+<table style="margin-bottom: {{ $pengajuan->kategori->margin_atas }}cm" align="justify" border="">
     <tr>
-        <td>{!! $pengajuan->kategori->paragraf_awal !!}</td>
+        <td align="justify">{!! $pengajuan->kategori->paragraf_awal !!}</td>
     </tr>
 </table>
-<br>
-
-
-<table align="left" border="">
-    <tr><td height="110"></td></tr>
+<table  align="left" border="">
+    <tr><td height=""></td></tr>
     <tr>
         <td>Dengan Ini Menerangkan Bahwa :</td>
     </tr>
@@ -43,66 +41,130 @@
     </tr>
     @foreach (json_decode($pengajuan->data,true) as $item=>$q)
         <tr>
-        <td>{{ $item }}</td>
+        <td>{{ ucwords(str_replace('_',' ',$item)) }}</td>
         <td>: {{ $q }}</td>
     </tr>
         
     @endforeach
-    {{--  <tr>
-        <td>Jenis Kelamin</td>
-        <td>: {{ $pengajuan->jenis_kelamin }}</td>
-    </tr>
-    <tr>
-        <td>Agama</td>
-        <td>: {{ $pengajuan->agama }}</td>
-    </tr>
-    <tr>
-        <td>Status</td>
-        <td>: {{ $pengajuan->status_perkawinan }}</td>
-    </tr>
-    <tr>
-        <td>No KTP / NIK</td>
-        <td>: {{ $pengajuan->nik }}</td>
-    </tr>
-    <tr>
-        <td>Tempat / Tanggal Lahir</td>
-        <td>: {{ $pengajuan->tempat_lahir }}, {{ $pengajuan->tanggal_lahir }}</td>
-    </tr>
-    <tr>
-        <td>Pekerjaan</td>
-        <td>: {{ $pengajuan->pekerjaan }}</td>
-    </tr>
-   
-    <tr>
-        <td>Alamat</td>
-        <td>: {{ $pengajuan->alamat }}</td>
-    </tr>  --}}
 </table>
-<br>
-<table align="left" border="">
-    <tr><td height="270"></td></tr>
+
+<table  style="margin-top: {{ $pengajuan->kategori->margin_bawah }}cm" align="left" border="">
+    <tr><td height="100"></td></tr>
     <tr>
         <td>{!! $pengajuan->kategori->paragraf_akhir !!}</td>
     </tr>
 </table>
 
 <table align="right" border="">
-    <tr><td height="400"></td></tr>
+    <tr><td height="70"></td></tr>
     <tr>
-        <td>Yogyakarta, {{ tgl_indo(Carbon\Carbon::now()->format('Y-m-d')) }}</td>
+        <td>Yogyakarta, {{ tgl_indo(Carbon\Carbon::parse(now())->format('Y-m-d')) }}</td>
     </tr>
     <tr>
-        <td>!!$pengajuan->kategori->jabatan_ttd</td>
+        <td>{{ $pengajuan->kategori->jabatan_ttd }}</td>
     </tr>
     <tr><td height="50"></td></tr>
     <tr>
-        <td><b>{ !!$pengajuan->kategori->nama_ttd}</b></td>
+        <td><b>{{ $pengajuan->kategori->nama_ttd }}</b></td>
     </tr>
     <tr>
-        <td><b>{ !!$pengajuan->kategori->nomer_pegawai_ttd}</b></td>
+        <td><b>{{ $pengajuan->kategori->nomor_pegawai_ttd }}</b></td>
     </tr>
 </table>
 <body>
     
+</body>
+</html>  --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Surat Keterangan</title>
+    <style type="text/css">
+        body{
+        margin-top: -40,
+        
+        
+        
+        
+        }
+        
+    </style>
+</head>
+
+<body >
+    
+    <table border="" align="center " style="margin-top: -20px ;margin_left:30px;margin_right30px" >
+    <tr>
+        <td style="margin-top: 0">
+            <center><font size="4" style="font-weight: bold;margin-top: -20px">{!! $pengajuan->kategori->kop_surat !!}</font>
+            {{-- <font size="4">KECAMATAN NGEMPLAK</font><BR>
+            <font size="4">DESA BIMOMARTANI</font><br> --}}
+            <font size="3">{{ $pengajuan->kategori->alamat_instansi }}</font>
+            </center>
+        </td>
+    </tr>
+<hr>
+</table>
+<br>
+<br>
+<table align="center" border="" >
+    <tr >
+        <td align="center" ><b>Surat Pengantar {{ $pengajuan->kategori->nama }}</b><hr style="margin-top: 0" ></td>
+    </tr>
+    <tr align="center" style="margin-top: 0">
+        <td><center>Nomer Surat {{ $pengajuan->pesanan->nomer_surat }}</center></td>
+    </tr>
+</table>
+<br>
+<table style="margin-bottom: {{ $pengajuan->kategori->margin_atas }}cm;margin_left:30px;margin_right:30px" align="justify" border="">
+    <tr>
+        <td align="justify">{!! $pengajuan->kategori->paragraf_awal !!}</td>
+    </tr>
+</table>
+{{-- <br> --}}
+
+
+    <table style="margin-left: {{ $pengajuan->kategori->margin_kekanan }}cm" align="justify" border="">
+    <tr><td height=""></td></tr>
+    <tr >
+        <td>Dengan Ini Menerangkan Bahwa :</td>
+    </tr>
+    <tr>
+        <td>Nama Lengkap</td>
+        <td>: {{ $pengajuan->nama_pemesan }}</td>
+    </tr>
+    @foreach (json_decode($pengajuan->data,true) as $item=>$q)
+        <tr style="margin-left: 30px">
+        <td>{{ ucwords(str_replace('_',' ',$item)) }}</td>
+        <td>: {{ ucwords($q) }}</td>
+        </tr>
+        
+    @endforeach
+
+</table>
+{{-- <br> --}}
+<table style="margin-bottom: {{ $pengajuan->kategori->margin_bawah }}cm;margin_left:30px;margin_right:30px" align="justify" border="">
+    <tr><td height=""></td></tr>
+    <tr>
+        <td align="justify" >{!! $pengajuan->kategori->paragraf_akhir !!}</td>
+    </tr>
+</table>
+
+<table align="right" border="" style="margin_left:450px;margin_right:30px ">
+    <tr><td height=""></td></tr>
+    <tr style="">
+        <td>Yogyakarta, {{ tgl_indo(Carbon\Carbon::parse(now())->format('Y-m-d')) }}</td>
+    </tr>
+    <tr align="center">
+        <td>{{ $pengajuan->kategori->jabatan_ttd }}</td>
+    </tr>
+    <tr ><td height="50"></td></tr>
+    <tr align="center">
+        <td><b>{{ $pengajuan->kategori->nama_ttd }}</b></td>
+    </tr>
+    <tr align="center">
+        <td><b>{{ $pengajuan->kategori->nomor_pegawai_ttd }}</b></td>
+    </tr>
+</table>
 </body>
 </html>

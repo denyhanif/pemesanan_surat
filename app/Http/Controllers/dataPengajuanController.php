@@ -7,6 +7,7 @@ use App\KategoriSurat;
 use App\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class dataPengajuanController extends Controller
 {
@@ -41,7 +42,7 @@ class dataPengajuanController extends Controller
      */
     public function store(Request $request)
     {   //dd($request->all());
-        $request->validate(['nama'=>'required|string']);//////
+    $request->validate(['nama'=>'required|string']);//////
 
         $kategori = KategoriSurat::find($request->id_kategori);
         //dd(collect(json_decode($kategori->data_template)));
@@ -52,6 +53,26 @@ class dataPengajuanController extends Controller
         $val =Validator::make($request->all(),json_decode($vali,true));
         //dd($val);
         $val->validate();
+        //dd(collect($data['nama']),$request->only($data['nama']));
+        $pengajuan = DataPengajuan::create([
+                'data'=>json_encode(collect($data['nama'])->combine($request->only($data['nama']))),
+                'kategori_surat_id'=>$request->id_kategori,
+                'jenis_kelamin'=> 'pria',
+                'status_perkawinan'=>'kawin',
+                'agama'=>'islam',
+                'nama_pemesan'=> $request->nama,////
+                    
+        ]);
+        $kode= $kategori->kode_surat;
+        $ids= $kategori->id;
+        //dd($kode);
+        $pesanan = Pesanan::create([
+            'data_pengajuan_id' => $pengajuan->id,
+            'nomer_surat' => $kode.'/ '.'Kec.Ngemplak'. '/'. $ids.' /' . tgl_romawi(Carbon::now()->format('m')).'/'. Carbon::now()->format('Y'),
+            'tanggal_pesan' => now(),
+        ]);
+        return redirect(route('riwayat.pengajuan'));
+
 
         // if($request->has('berkas'))
         // {
@@ -73,24 +94,7 @@ class dataPengajuanController extends Controller
         //         'berkas' => $new_berkas,
         //     ]);
         // }
-        $pengajuan = DataPengajuan::create([
-                'data'=>json_encode(collect($data['nama'])->combine($request->only($data['nama']))),
-                'kategori_surat_id'=>$request->id_kategori,
-                'jenis_kelamin'=> 'pria',
-                'status_perkawinan'=>'kawin',
-                'agama'=>'islam',
-                'nama_pemesan'=> $request->nama,////
-                    
-        ]);
-        $kode= $kategori->kode_surat;
-        //dd($kode);
-        $pesanan = Pesanan::create([
-            'data_pengajuan_id' => $pengajuan->id,
-            'nomer_surat' => $kode. '-' . now(),
-            'tanggal_pesan' => now(),
-        ]);
-        return redirect(route('riwayat.pengajuan'));
-
+        
     }
 
     /**

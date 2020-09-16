@@ -9,14 +9,16 @@
           </div>
           <div class="sidebar-brand-text mx-3">Pengajuan <sup>Surat</sup></div>
         </a>
-        
-          <!-- Divider -->
-          <hr class="sidebar-divider my-0">
 
+
+        
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        
         @if (auth()->user())
-
         
-        <!-- Nav Item - Dashboard -->
+        @can('isAdmin')
+        <!-- Dashboard -->
         <li class="nav-item {{ Request::path() === 'Administrator/home' ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('home.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -31,7 +33,7 @@
           Interface
         </div> --}}
   
-        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- Tambah Pengajuan -->
         <li class="nav-item {{ Request::path() === 'Administrator/pengajuan/create' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('pengajuan.create') }}">
               <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -42,7 +44,7 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
   
-        <!-- Nav Item - Utilities Collapse Menu -->
+        <!-- Riwayat -->
         <li class="nav-item {{ Request::path() === 'Administrator/riwayat' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('riwayat.pengajuan') }}">
               <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -57,7 +59,7 @@
           Addons
         </div> --}}
   
-        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- MAster -->
         <li class="nav-item {{ Request::path() === 'Administrator/kategori' ? 'active' : '' }}">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
@@ -70,7 +72,48 @@
             </div>
           </div>
         </li>
+        <!-- Rekap -->
+        <li class="nav-item {{ Request::path() === 'Administrator/kategori' ? 'active' : '' }}">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Rekap </span>
+          </a>
+          <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="{{ route('rekap.tahun') }}">Rekap Tahun</a>
+            
+            </div>
+          </div>
+        </li>
+        @endcan
+        
+        @can('isKades')
+          <!-- Nav Item - Dashboard -->
+          <li class="nav-item {{ Request::path() === 'Administrator/home' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('home.index') }}">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Dashboard</span></a>
+          </li>
+           <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item {{ Request::path() === 'Administrator/riwayat' ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('riwayat.pengajuan') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Riwayat</span></a>
+        </li>
+        @endcan
 
+        @can('isStaff')
+          <!-- Nav Item - Dashboard -->
+          <li class="nav-item {{ Request::path() === 'Administrator/home' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('home.index') }}">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Dashboard</span></a>
+          </li>
+        <li class="nav-item {{ Request::path() === 'Administrator/riwayat' ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('riwayat.pengajuan') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Riwayat</span></a>
+        </li>
         <li class="nav-item {{ Request::path() === 'Administrator/kategori' ? 'active' : '' }}">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
@@ -83,6 +126,8 @@
             </div>
           </div>
         </li>
+        @endcan
+       
         <li class="nav-item">
          
             <a class="nav-link collapsed" href="{{ route('logout') }}"
@@ -102,8 +147,8 @@
         </li>
 
 
-         <!-- Divider -->
-         <hr class="sidebar-divider d-none d-md-block">
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
   
          <!-- Sidebar Toggler (Sidebar) -->
          <div class="text-center d-none d-md-inline">
@@ -115,8 +160,13 @@
             
         @elseif(auth()->guard('warga'))
         <li class="nav-item">
+          <a class="nav-link" href="{{ route('warga.home') }}">
+            <i class="fas fa-fw fa-home"></i>
+            <span>Home</span></a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{ route('warga.dashboard') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-paper-plane"></i>
             <span>Pesan Surat</span></a>
         </li>
 
@@ -124,13 +174,13 @@
   
         <li class="nav-item">
           <a class="nav-link" href="{{ route('warga.riwayat') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-history"></i>
             <span>Riwayat Pemesanan</span></a>
         </li>
   
         <li class="nav-item">
           <a class="nav-link" href="{{ route('warga.logout') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-sign-out-alt"></i>
             <span>Logout</span></a>
         </li>
   

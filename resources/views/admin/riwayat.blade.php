@@ -11,7 +11,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 shadow card mb-4 pt-3">
-        <table id="table_id" class="table table-striped table-bordered">
+        <table id="table_id" class="table dt-responsive table-striped table-bordered">
             <thead class="border-none">
               <tr>
                 <th scope="col">No</th>

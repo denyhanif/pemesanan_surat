@@ -145,11 +145,13 @@ class HomeController extends Controller
 
     public function registerstore(Request $request)
     {
+        
         $request->validate([
             'nomor_pegawai' => 'required',
             'nama_pegawai' => 'required',
             'email' => 'required',
             'password' => 'required|confirmed',
+
         ]);
 
         $user = User::create([
@@ -160,7 +162,22 @@ class HomeController extends Controller
             'password' => $request->password,
         ]);
         return redirect(route('admin.index'));
-    }
+        // $request->validate([
+        //     'nomor_pegawai' => 'required',
+        //     'nama_pegawai' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required|confirmed',
+        // ]);
+
+    //     $user = User::create([
+    //         'nomer_pegawai' => $request->nomor_pegawai,
+    //         'nama' => $request->nama_pegawai,
+    //         'email' => $request->email,
+    //         'role' => $request->role,
+    //         'password' => $request->password,
+    //     ]);
+    //     return redirect(route('admin.index'));
+     }
 
     public function adminupdate(Request $request, $id)
     {
@@ -197,7 +214,7 @@ class HomeController extends Controller
 
     public function listdatakategori(DataPengajuan $pesanan){
         //return $pesanan->id;
-        $view = View::make('admin.dashboard.pakde')->with('pesanan',$pesanan)->render();
+        $view = View::make('admin.dashboard.load')->with('pesanan',$pesanan)->render();
 
         return response()->json(['view'=>$view,'nama'=>$pesanan->nama_pemesan],200);
         //return response ;

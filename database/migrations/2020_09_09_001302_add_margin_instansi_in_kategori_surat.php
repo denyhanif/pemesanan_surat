@@ -14,10 +14,9 @@ class AddMarginInstansiInKategoriSurat extends Migration
     public function up()
     {
     Schema::table('kategori_surats', function (Blueprint $table) {
-            $table->integer('margin_kekanan')->after('kode_surat');
-            $table->integer('margin_atas')->after('kode_surat');
-            $table->integer('margin_bawah')->after('kode_surat');
-            $table->string('nama_instansi')->after('kode_surat');
+            $table->integer('margin_kekanan')->after('kode_surat')->nullable();
+            $table->integer('margin_atas')->after('kode_surat')->nullable();
+            $table->integer('margin_bawah')->after('kode_surat')->nullable();
             $table->string('alamat_instansi')->after('kode_surat');
         });
     }
@@ -30,10 +29,9 @@ class AddMarginInstansiInKategoriSurat extends Migration
     public function down()
     {
         Schema::table('kategori_surats', function (Blueprint $table) {
-            $table->dropColumn('margin_kekanan');
-            $table->dropColumn('margin_atas');
-            $table->dropColumn('margin_bawah');
-            $table->dropColumn('nama_instansi');
+            $table->dropColumn('margin_kekanan')->nullable();
+            $table->dropColumn('margin_atas')->nullable();
+            $table->dropColumn('margin_bawah')->nullable();
             $table->dropColumn('alamat_instansi');
         });
     }

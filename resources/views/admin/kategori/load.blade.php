@@ -6,18 +6,18 @@
     @endphp
     @if($data['type'][$loop->index]=="string")
     <div class="form-group col-md-6">
-                <label for="inputEmail4">{{ $data['nama'][$tess] }}</label>
+                <label for="inputEmail4">{{ str_replace('_',' ',$data['nama'][$tess]) }}</label>
                 <input type="text" name="{{ $data['nama'][$tess] }}" class="form-control" id="inputEmail4">
     </div>
     @elseif($data['type'][$loop->index]=="date")
     <div class="form-group col-md-6">
-                <label for="date">{{ $data['nama'][$tess] }}r</label>
+                <label for="date">{{ str_replace('_',' ',$data['nama'][$tess]) }}</label>
                 <input type="date" name="{{ $data['nama'][$tess] }}" class="form-control" id="date">
     </div>
     @elseif($data['type'][$loop->index]=='numeric')
     
     <div class="form-group col-md-6">
-                <label for="date">{{ $data['nama'][$tess] }}</label>
+                <label for="date">{{ str_replace('_',' ',$data['nama'][$tess]) }}</label>
                 <input type="number" name="{{ $data['nama'][$tess] }}" class="form-control" id="date">
     </div>
     @endif

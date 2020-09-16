@@ -62,7 +62,9 @@ Route::group(['prefix' => 'member', 'namespace' => 'Warga'], function() {
 
 
     Route::group(['middleware' => 'warga'], function () {
+        Route::get('/print/{id}', 'wargaController@print')->name('print.surat.warga');
         Route::get('dashboard', 'WargaController@dashboard')->name('warga.dashboard');
+        Route::get('home', 'WargaController@home')->name('warga.home');
         Route::get('logout', 'WargaController@logout')->name('warga.logout');
         Route::post('pengajuan', 'WargaController@pengajuanstore')->name('warga.pengajuan.store');
         Route::get('riwayat', 'WargaController@riwayat')->name('warga.riwayat');

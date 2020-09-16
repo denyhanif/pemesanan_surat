@@ -6,10 +6,10 @@
   <h1 class="h3 mb-0 text-gray-800">Riwayat</h1>
 </div>
 <div class="row">
-    <div class="col-md-12 card shadow mb-4">
-        <table class="table table-striped">
-            <thead>
-              <tr>
+    <div class="col-md-12 card shadow ml-1 mb-4">
+        <table class="table table-responsive-sm table-striped ">
+            <thead >
+              <tr class="">
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Jenis Surat</th>
@@ -17,6 +17,7 @@
                 <th scope="col">Tanggal Verifikasi</th>
                 <th scope="col">Tanggal Jadi</th>
                 <th scope="col">Status</th>
+                <th scope="col"> File</th>
               </tr>
             </thead>
              
@@ -39,6 +40,13 @@
                   </td>
                   <td>{{ $row->tanggal_jadi() }}</td>
                   <td>{!! $row->status_label !!}</td>
+                  <td>
+                    @if( $row->pesanan->status==2)
+                    <a target="_blank" class="btn btn-success" href="{{ route('print.surat.warga', $row->id) }}">Unduh</a>
+                    @else
+                    Belum ada file
+                    @endif
+                  </td>
                 </tr>
                 @empty
                     <tr>

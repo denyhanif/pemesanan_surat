@@ -44,7 +44,7 @@ class LoginController extends Controller
         $auth = $request->only('email', 'password');
 
         if (auth()->guard('warga')->attempt($auth)) {
-            return redirect()->intended(route('warga.dashboard'));
+            return redirect()->intended(route('warga.home'));
         }
 
         return redirect()->back()->with(['error' => 'Email / Password Salah']);

@@ -13,6 +13,7 @@
                 @csrf
                 <div class="row">
                     <div class="col-md-4">
+                    
                         <div class="form-group m-2">
                             <label class="mb-0" for="formGroupExampleInput">Alamat Instansi</label>
                             <input type="text" class="form-control mb-1 @error('alamat_instansi') is-invalid @enderror" name="alamat_instansi" id="formGroupExampleInput" placeholder="Masukkan Alamat Instansi" value="{{ old('alamat_instansi') }}">
@@ -61,6 +62,7 @@
                                 </span>
                                 @enderror
                         </div>
+                        
                         <div class="form-group m-2">
                             <label class="text-sm mb-0" for="formGroupExampleInput">NIP</label>
                             <input type="text" class="form-control @error('nomor_pegawai_ttd') is-invalid @enderror" name="nomor_pegawai_ttd" id="formGroupExampleInput" placeholder="Masukkan NIP" value="{{ old('nomor_pegawai_ttd') }}">
@@ -70,40 +72,50 @@
                                 </span>
                                 @enderror
                         </div>
-                                                <div class="form-group m-2">
-                            <label class="text-sm mb-0" for="formGroupExampleInput">Margin Atas</label>
-                            <input type="number" class="form-control @error('margin_atas') is-invalid @enderror" name="margin_atas" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
-                                @error('margin_atas')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                        </div>
 
-                        <div class="form-group m-2">
-                            <label class="text-sm mb-0" for="formGroupExampleInput">Margin Bawah</label>
-                            <input type="number" class="form-control @error('margin_bawah') is-invalid @enderror" name="margin_bawah" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
-                                @error('margin_bawah')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                        </div>
+                        <div class="form-row p-0" >
+                            
+                                <div class="col-md-3 form-group m-1">
 
-                        <div class="form-group m-2">
-                            <label class="text-sm mb-0" for="formGroupExampleInput">Margin Kekanan</label>
-                            <input type="number" class="form-control @error('margin_kanan') is-invalid @enderror" name="margin_kanan" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
-                                @error('margin_kanan')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                <label class="text-sm mb-0" for="formGroupExampleInput">Jarak Atas</label>
+                                <input type="number" class="form-control @error('margin_atas') is-invalid @enderror" name="margin_atas" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                    @error('margin_atas')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-3 form-group m-1">
+                                    <label class="text-sm mb-0" for="formGroupExampleInput"> Jarak Bawah</label>
+                                    <input type="number" class="form-control @error('margin_bawah') is-invalid @enderror" name="margin_bawah" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                        @error('margin_bawah')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                </div>
+                                  <div class="col-md-3 form-group m-1">
+                                    <label class="text-sm mb-0" for="formGroupExampleInput">jarak kanan</label>
+                                    <input type="number" class="form-control @error('margin_kekanan') is-invalid @enderror" name="margin_kekanan" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                        @error('margin_kekanan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                </div>
+                            
+                           
+
+                            
+                            
                         </div>
+                        
                         
                         <div id="data-wrap">
                             <div id="input-wrap">
                                 <hr>
-                            {{--  'data' inputan request cek contorel  --}}
+                            
                                 @if(old('data'))
                                     @foreach(old('data')['nama'] as $data)
                                     <div class="form-group row">
@@ -204,7 +216,7 @@
 @endsection
 
 @section('js')
-    <script>//untuk tambah inputan
+    <script>
         $(document).ready(function(){
             let dataWrap= $("#input-wrap");
             $("#tambah button").click(function(){

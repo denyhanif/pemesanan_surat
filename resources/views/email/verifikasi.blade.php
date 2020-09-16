@@ -1,12 +1,11 @@
 @component('mail::message')
 # Kepada {{ $pengajuan->nama_pemesan }}
 
-Pengajuan Surat <b>{{ $pengajuan->kategori->nama }}</b> Anda Telah Diverifikasi Silahkan Cek Akun Anda.
+Pengajuan Surat <b>{{ $pengajuan->kategori->nama }}</b> Anda Telah berhasil Diverifikasi oleh Admin.
 
-@component('mail::button', ['url' => ''])
+{{--  @component('mail::button', ['url' => ''])
 Login Warga
-@endcomponent
+@endcomponent  --}}
 
-Thanks,<br>
-Desa Maju Mundur
+Terimaksih,<br>
 @endcomponent

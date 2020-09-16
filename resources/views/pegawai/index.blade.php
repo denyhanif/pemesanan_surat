@@ -12,9 +12,9 @@
 
 <div class="row">
     <div class="col-md-12 card shadow mb-4">
-        <table class="table table-striped">
+        <table class="table table-responsive-sm table-striped">
             <thead>
-              <tr>
+              <tr class="">
                 <th scope="col">No</th>
                 <th scope="col">Nomer Pegawai</th>
                 <th scope="col">Nama</th>

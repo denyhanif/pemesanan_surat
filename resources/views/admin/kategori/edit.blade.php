@@ -17,7 +17,7 @@
                     <div class="col-md-4">
                         <div class="form-group m-2">
                             <label class="mb-0" for="formGroupExampleInput">Alamat Instansi</label>
-                            <input type="text" class="form-control mb-1 @error('alamat_instansi') is-invalid @enderror" name="alamat_instansi" id="formGroupExampleInput" placeholder="Masukkan Alamat Instansi" value="{{ $kategori->alamat_instansi }}">
+                            <input type="text" class="form-control mb-1 @error('alamat_instansi') is-invalid @enderror" name="alamat_instansi" id="formGroupExampleInput" placeholder="Masukkan Alamat Instansi" value="{{ $kategori->alamat_instansi}}">
                                 @error('alamat_instansi')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -42,21 +42,20 @@
                                 </span>
                                 @enderror
                         </div>
+                        
                         <div class="form-group">
-                            <label class="" for="formGroupExampleInput">Nama Pegawai</label>
-                            <input type="text" class="form-control @error('nama_ttd') is-invalid @enderror" 
-                                name="nama_ttd" id="formGroupExampleInput" 
-                                value="{{ $kategori->nama_ttd }}">
-                                @error('nama_ttd')
+                            <label class="text-sm" for="formGroupExampleInput">Jabatan</label>
+                            <input type="text" class="form-control @error('jabatan_ttd') is-invalid @enderror" name="jabatan_ttd" id="formGroupExampleInput"  value="{{ $kategori->jabatan_ttd }}">
+                                @error('jabatan_ttd')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                         </div>
                         <div class="form-group">
-                            <label class="text-sm" for="formGroupExampleInput">Jabatan</label>
-                            <input type="text" class="form-control @error('jabatan_ttd') is-invalid @enderror" name="jabatan_ttd" id="formGroupExampleInput"  value="{{ $kategori->jabatan_ttd }}">
-                                @error('jabatan_ttd')
+                            <label class="text-sm" for="formGroupExampleInput">Nama Pegaai</label>
+                            <input type="text" class="form-control @error('nama_ttd') is-invalid @enderror" name="nama_ttd" id="formGroupExampleInput"  value="{{ $kategori->nama_ttd }}">
+                                @error('nama_ttd')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -70,7 +69,47 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                               
                         </div>
+
+                        <div class="form-row p-0" >
+                            
+                                <div class="col-md-3 form-group m-1">
+
+                                <label class="text-sm mb-0" for="formGroupExampleInput">Jarak Atas</label>
+                                <input type="number" class="form-control @error('margin_atas') is-invalid @enderror" name="margin_atas" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                    @error('margin_atas')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-3 form-group m-1">
+                                    <label class="text-sm mb-0" for="formGroupExampleInput"> Jarak Bawah</label>
+                                    <input type="number" class="form-control @error('margin_bawah') is-invalid @enderror" name="margin_bawah" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                        @error('margin_bawah')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                </div>
+                                  <div class="col-md-3 form-group m-1">
+                                    <label class="text-sm mb-0" for="formGroupExampleInput">jarak kanan</label>
+                                    <input type="number" class="form-control @error('margin_kekanan') is-invalid @enderror" name="margin_kekanan" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                        @error('margin_kekanan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                </div>
+                            
+                           
+
+                            
+                            
+                        </div>
+                         <hr>
                         <div id="data-wrap">
                             <div id="input-wrap">
                                 {{--  @error('data.*')
@@ -102,7 +141,7 @@
                                         <div class="row col-auto" style="flex: 1 1 1px;">
                                             <div class="col-6">
                                                 <label>Nama</label>
-                                                <input type="text" class="form-control {{ $errors->has('data.nama.'.$loop->index)  ? 'is-invalid' : ''}}" placeholder="Masukkan Nama" name="data[nama][]" value="{{ old('data')['nama'][$loop->index] }}">
+                                                <input type="text" class="form-control {{ $errors->has('data.nama.'.$loop->index)  ? 'is-invalid' : ''}}" placeholder="Masukkan Nama" name="data[nama][]" value="{{ str_replace('_',' ',old('data')['nama'][$loop->index]) }}">
                                                 @error('data.nama.'.$loop->index)
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -138,7 +177,7 @@
                                         <div class="row col-auto" style="flex: 1 1 1px;">
                                             <div class="col-6">
                                                 <label>Nama</label>
-                                                <input type="text" class="form-control " placeholder="Masukkan Nama" name="data[nama][]" value="{{ $data['nama'][$loop->index] }}">
+                                                <input type="text" class="form-control " placeholder="Masukkan Nama" name="data[nama][]" value="{{ str_replace('_',' ',$data['nama'][$loop->index]) }}">
                                                 @error('data.nama.'.$loop->index)
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -306,6 +345,7 @@
             $('#input-wrap').on('click','.hapus',function(){
                 $(this).closest('.input-wrapwrap').remove()
             })
+            
         });
     </script>
     <script>

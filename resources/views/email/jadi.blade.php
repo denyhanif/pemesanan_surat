@@ -3,9 +3,9 @@
 
 Pengajuan Surat <b>{{ $pengajuan->kategori->nama }}</b> Anda Telah Jadi Silahkan Di Ambil Di Kelurahan.
 
-@component('mail::button', ['url' => ''])
+{{--  @component('mail::button', ['url' => ''])
 Button Text
-@endcomponent
+@endcomponent  --}}
 
 Thanks,<br>
 Desa Maju Mundur

@@ -105,8 +105,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="row">
-          <div class="col-md-12">
-            <h5 class="modal-title">Halaman Verifikasi Data</h5>
+          <div class="col-md-12  text-center">
+            <h5 class="modal-title "> Verifikasi Data </h5>
           </div>
         </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -114,6 +114,9 @@
         </button>
       </div>
       <div class="modal-body">
+          <div class="col-md-12 ">
+            <h6 class="modal-title">Nama Pemesan</h6>
+          </div>
           <input type="text" class="form-control col-md-6 mb-2"  id="nama_pemesan">
 
           {{--  <table class="table table-bordered">

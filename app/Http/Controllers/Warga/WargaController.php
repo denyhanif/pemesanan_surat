@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Warga;
 
 use App\DataPengajuan;
 use App\Http\Controllers\Controller;
+use App\Warga;
 use App\KategoriSurat;
 use App\Pesanan;
 use Illuminate\Support\Facades\Validator;
-
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
 
 
 class WargaController extends Controller
@@ -22,6 +24,12 @@ class WargaController extends Controller
         // dd(Auth::guard('warga')->id());
         $kategori = KategoriSurat::get();
         return view('warga.pengajuan', compact('kategori'));
+    }
+    public function home(){
+
+        //$warga = Warga::get();
+
+        return view('warga.homewarga');
     }
 
     public function pengajuanstore(Request $request)
@@ -69,53 +77,14 @@ class WargaController extends Controller
                 'nama_pemesan'=> $request->nama,////
                     
         ]);
-
+        $kode= $kategori->kode_surat;
+        $ids= $kategori->id;
         $pesanan = Pesanan::create([
             'data_pengajuan_id' => $pengajuan->id,
-            'nomer_surat' => Str::random(3) . '-' . time(),
+            'nomer_surat' => $kode.'/ '.'Kec.Ngemplak'. '/'. $ids.' /' . tgl_romawi(Carbon::now()->format('m')).'/'. Carbon::now()->format('Y'),
             'tanggal_pesan' => now(),
         ]);
-        // $request->validate([
-        //     'id_kategori' => 'required',
-        //     'nama' => 'required',
-        //     'jenis_kelamin' => 'required',
-        //     'tempat_lahir' => 'required',
-        //     'tanggal_lahir' => 'required',
-        //     'nik' => 'required',
-        //     'alamat' => 'required',
-        //     'pekerjaan' => 'required',
-        //     'status' => 'required',
-        //     'agama' => 'required',
-        //     'berkas' => 'required',
-        // ]);
-
-        // if($request->has('berkas'))
-        // {
-        //     $berkas = $request->berkas;
-        //     $new_berkas = time() . $berkas->getClientOriginalName();
-        //     $berkas->storeAs('public/berkaswarga', $new_berkas);
-
-        //     $pengajuan = DataPengajuan::create([
-        //         'kategori_surat_id' => $request->id_kategori,
-        //         'warga_id' => Auth::guard('warga')->id(),
-        //         'nama_pemesan' => $request->nama,
-        //         'jenis_kelamin' => $request->jenis_kelamin,
-        //         'tempat_lahir' => $request->tempat_lahir,
-        //         'tanggal_lahir' => $request->tanggal_lahir,
-        //         'nik' => $request->nik,
-        //         'alamat' => $request->alamat,
-        //         'pekerjaan' => $request->pekerjaan,
-        //         'status_perkawinan' => $request->status,
-        //         'agama' => $request->agama,
-        //         'berkas' => $new_berkas,
-        //     ]);
-        // }
-
-        // $pesanan = Pesanan::create([
-        //     'data_pengajuan_id' => $pengajuan->id,
-        //     'nomer_surat' => Str::random(3) . '-' . time(),
-        //     'tanggal_pesan' => now(),
-        // ]);
+        
         return redirect(route('warga.dashboard'));
 
     }
@@ -133,9 +102,19 @@ class WargaController extends Controller
     }
 
     public function labelPengajuan(KategoriSurat $id){
-        $view = View::make('admin.kategori.pakde')->with('kategori',$id)->render();
+        $view = View::make('admin.kategori.load')->with('kategori',$id)->render();
         return response()->json(['view'=>$view],200);
 
+    }
+
+    public function print($id)
+    {
+        //$id= Auth::guard('warga')->id();
+        $pengajuan = DataPengajuan::with(['kategori', 'warga', 'pesanan'])->find($id);
+        // dd($pengajuan);
+
+        $pdf = PDF::loadview('surat', compact('pengajuan'))->setPaper('a4', 'portrait');
+        return $pdf->stream();
     }
      
 }

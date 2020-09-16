@@ -1,11 +1,11 @@
 @component('mail::message')
 # Kepada {{ $pengajuan->nama_pemesan }}
 
-Pengajuan Surat <b>{{ $pengajuan->kategori->nama }}</b> Pesanan Anda ditolak.
+Pengajuan Surat <b>{{ $pengajuan->kategori->nama }}</b> Pengajuan surat Anda ditolak.
 
-@component('mail::button', ['url' => ''])
+{{--  @component('mail::button', ['url' => ''])
 Button Text
-@endcomponent
+@endcomponent  --}}
 
 Thanks,<br>
 Desa Maju Mundur
