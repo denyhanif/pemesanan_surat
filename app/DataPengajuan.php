@@ -46,7 +46,7 @@ class DataPengajuan extends Model
         } elseif ($this->pesanan->status == 2) {
             return '<span class="badge badge-info">Jadi</span>';
         }elseif ($this->pesanan->status == 3) {
-            return '<span class="badge badge-danger">Ditolak/</span>';
+            return '<span class="badge badge-danger">Ditolak</span>';
         }
         return '<span class="badge badge-success">Selesai</span>';
     }

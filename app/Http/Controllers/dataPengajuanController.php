@@ -16,9 +16,12 @@ class dataPengajuanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(KategoriSurat $id)
     {
-        //
+        // $id = KategoriSurat::find($request->id_kategori);
+        $pengajuan = DataPengajuan::where('kategori_surat_id', $id)->orderBy('created_at', 'DESC')->get();
+        $title = KategoriSurat::find($id);
+        return view('admin.dashboard.listkategori', compact('pengajuan', 'title'));
     }
 
     /**
@@ -41,8 +44,8 @@ class dataPengajuanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   //dd($request->all());
-    $request->validate(['nama'=>'required|string']);//////
+    {  
+        $request->validate(['nama'=>'required|string']);//////
 
         $kategori = KategoriSurat::find($request->id_kategori);
         //dd(collect(json_decode($kategori->data_template)));
@@ -71,7 +74,7 @@ class dataPengajuanController extends Controller
             'nomer_surat' => $kode.'/ '.'Kec.Ngemplak'. '/'. $ids.' /' . tgl_romawi(Carbon::now()->format('m')).'/'. Carbon::now()->format('Y'),
             'tanggal_pesan' => now(),
         ]);
-        return redirect(route('riwayat.pengajuan'));
+        return redirect(route('home.index'));
 
 
         // if($request->has('berkas'))
@@ -128,57 +131,52 @@ class dataPengajuanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate(['nama'=>'required|string']);//////
+        //dd($request->all());
 
-        $kategori = KategoriSurat::find($request->id_kategori);
+        $request->validate(['nama'=>'required|string']);//////
+        $pengajuan= DataPengajuan::find($id);
+
+        $kategori = $pengajuan->kategori;
         //dd(collect(json_decode($kategori->data_template)));
         $data = json_decode($kategori->data_template,true);
-        
+        //dd($request->all());
         $vali = collect($data['nama'])->combine($data['type'])->toJson();
         //dd($validate);
         $val =Validator::make($request->all(),json_decode($vali,true));
         //dd($val);
         $val->validate();
 
-        // if($request->has('berkas'))
-        // {
-        //     $berkas = $request->berkas;
-        //     $new_berkas = time() . $berkas->getClientOriginalName();
-        //     $berkas->storeAs('public/berkaswarga', $new_berkas);
+        // dd($request->all());
 
-        //     $pengajuan = DataPengajuan::create([
-        //         'kategori_surat_id' => $request->id_kategori,
-        //         'nama_pemesan' => $request->nama,
-        //         'jenis_kelamin' => $request->jenis_kelamin,
-        //         'tempat_lahir' => $request->tempat_lahir,
-        //         'tanggal_lahir' => $request->tanggal_lahir,
-        //         'nik' => $request->nik,
-        //         'alamat' => $request->alamat,
-        //         'pekerjaan' => $request->pekerjaan,
-        //         'status_perkawinan' => $request->status,
-        //         'agama' => $request->agama,
-        //         'berkas' => $new_berkas,
-        //     ]);
-        // }
-
-        $kode =$kategori->kode;
-        $pengajuan = DataPengajuan::create([
+        //dd($pengajuan);
+        $pengajuan->update([
                 'data'=>json_encode(collect($data['nama'])->combine($request->only($data['nama']))),
-                'kategori_surat_id'=>$request->id_kategori,
+                //'kategori_surat_id'=>$request->id_kategori,
                 'jenis_kelamin'=> 'pria',
                 'status_perkawinan'=>'kawin',
                 'agama'=>'islam',
                 'nama_pemesan'=> $request->nama,////
                     
         ]);
-
-
-        $pesanan = Pesanan::create([
-            'data_pengajuan_id' => $pengajuan->id,
-            'nomer_surat' => Str::random(3) . '-' . time(),
-            'tanggal_pesan' => now(),
+        // $idpesan = $request->id_pesanan;
+        // $idpengaju = $request->id_pengaju;
+        
+        
+        // dd('berhasil');
+        $pengajuan->pesanan->update([
+            'tanggal_verifikasi' => now(),
+            'status' => 1,
+        
+            
         ]);
-        return redirect(route('riwayat.pengajuan'));
+
+
+        // $pesanan = Pesanan::create([
+        //     'data_pengajuan_id' => $pengajuan->id,
+        //     'nomer_surat' => Str::random(3) . '-' . time(),
+        //     'tanggal_pesan' => now(),
+        // ]);
+        return redirect(route('home.index'));
 
     }
 

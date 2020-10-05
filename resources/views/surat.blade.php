@@ -79,32 +79,22 @@
 <html lang="en">
 <head>
     <title>Surat Keterangan</title>
-    <style type="text/css">
-        body{
-        margin-top: -40,
-        
-        
-        
-        
-        }
-        
-    </style>
+    
 </head>
 
 <body >
     
-    <table border="" align="center " style="margin-top: -20px ;margin_left:30px;margin_right30px" >
+    <table border="" align="center " style="margin-top: -20px ;margin_left:30px;" >
     <tr>
         <td style="margin-top: 0">
-            <center><font size="4" style="font-weight: bold;margin-top: -20px">{!! $pengajuan->kategori->kop_surat !!}</font>
-            {{-- <font size="4">KECAMATAN NGEMPLAK</font><BR>
-            <font size="4">DESA BIMOMARTANI</font><br> --}}
+            <center ><font align="center " size="4" style="font-weight: bold;margin-top: -20px;margin_right:40px">{!! $pengajuan->kategori->kop_surat !!}</font>
+           
             <font size="3">{{ $pengajuan->kategori->alamat_instansi }}</font>
             </center>
         </td>
     </tr>
-<hr>
-</table>
+    <hr>
+    </table>
 <br>
 <br>
 <table align="center" border="" >

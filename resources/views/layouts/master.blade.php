@@ -119,15 +119,15 @@
               method: 'get',
               success: function(data){
                 //$('#data-template-wrap').html(data.view)
-                console.log(data);
-                current= $('body').data('jumlah');
-                if(current!=data.jumlah){
-                  $('body').data('jumlah',data.jumlah);
-                  new PNotify({
-                    title: 'Simple Notification',
-                    text: 'Hey, I\'m a simple notification.'
-                });
-                }
+                  console.log(data);
+                  current= $('body').data('jumlah');
+                    if(current!=data.jumlah){
+                      $('body').data('jumlah',data.jumlah);
+                      new PNotify({
+                        title: 'Simple Notification',
+                        text: 'Hey, I\'m a simple notification.'
+                      });
+                  }
                 
               },
               

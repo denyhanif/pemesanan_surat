@@ -43,9 +43,9 @@
                     <select name="role" class="form-control">
                         <option>Pilih Jabatan</option>
                         <option selected value="">{{ $pegawai->role }}</option>
-                        <option value="admin">Admin</option>
-                        <option value="kades">Kades</option>
-                        <option value="staff">staf</option>
+                    <option value="kades">Kades</option>
+                    <option value="admin">Admin</option>
+                    <option value="staff">Staff</option>
                     </select>
                         @error('role')
                     <span class="invalid-feedback" role="alert">

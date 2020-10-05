@@ -49,6 +49,7 @@ class HomeController extends Controller
     public function riwayat()
     {
         $pengajuan = DataPengajuan::with(['kategori', 'pesanan'])->orderBy('created_at', 'DESC')->paginate(10);
+        //dd($pengajuan);
         return view('admin.riwayat', compact('pengajuan'));
     }
 
@@ -177,7 +178,7 @@ class HomeController extends Controller
     //         'password' => $request->password,
     //     ]);
     //     return redirect(route('admin.index'));
-     }
+    }
 
     public function adminupdate(Request $request, $id)
     {
@@ -187,6 +188,7 @@ class HomeController extends Controller
             'email' => 'required',
             'password' => 'nullable|confirmed',
         ]);
+        //dd($request->all());
 
         $admin = User::find($id);
         $password = $admin->password;
@@ -199,7 +201,7 @@ class HomeController extends Controller
             'nomer_pegawai' => $request->nomor_pegawai,
             'nama' => $request->nama_pegawai,
             'email' => $request->email,
-            'role' => 'staff',
+            'role' => $request->role,
             'password' => $password,
         ]);
         return redirect(route('admin.index')); 
@@ -261,7 +263,7 @@ class HomeController extends Controller
 
         // dd('berhasil');
         $pengajuan->pesanan->update([
-            'status' => 4,
+            'is_ambil' => true,
         ]);
 
         return redirect()->back()->with(['success' => 'DataDiambil']);

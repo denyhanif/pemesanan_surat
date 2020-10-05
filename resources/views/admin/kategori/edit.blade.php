@@ -77,7 +77,7 @@
                                 <div class="col-md-3 form-group m-1">
 
                                 <label class="text-sm mb-0" for="formGroupExampleInput">Jarak Atas</label>
-                                <input type="number" class="form-control @error('margin_atas') is-invalid @enderror" name="margin_atas" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                <input type="number" class="form-control @error('margin_atas') is-invalid @enderror" name="margin_atas" id="formGroupExampleInput" placeholder=" cm" value="{{ $kategori->margin_atas }}">
                                     @error('margin_atas')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -87,7 +87,7 @@
 
                                 <div class="col-md-3 form-group m-1">
                                     <label class="text-sm mb-0" for="formGroupExampleInput"> Jarak Bawah</label>
-                                    <input type="number" class="form-control @error('margin_bawah') is-invalid @enderror" name="margin_bawah" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                    <input type="number" class="form-control @error('margin_bawah') is-invalid @enderror" name="margin_bawah" id="formGroupExampleInput" placeholder=" cm" value="{{ $kategori->margin_bawah }}">
                                         @error('margin_bawah')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -96,7 +96,7 @@
                                 </div>
                                   <div class="col-md-3 form-group m-1">
                                     <label class="text-sm mb-0" for="formGroupExampleInput">jarak kanan</label>
-                                    <input type="number" class="form-control @error('margin_kekanan') is-invalid @enderror" name="margin_kekanan" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                    <input type="number" class="form-control @error('margin_kekanan') is-invalid @enderror" name="margin_kekanan" id="formGroupExampleInput" placeholder="cm" value="{{ $kategori->margin_kekanan }}">
                                         @error('margin_kekanan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -137,7 +137,7 @@
                                 @enderror  --}}
                                 @if(old('data'))
                                     @foreach(old('data')['nama'] as $data)
-                                    <div class="form-group row">
+                                    <div class="form-group row input-wrapwrap">
                                         <div class="row col-auto" style="flex: 1 1 1px;">
                                             <div class="col-6">
                                                 <label>Nama</label>
@@ -160,7 +160,7 @@
                                         <div class="col-auto">
                                             <div class="form-gorup row">
                                                 <label style="opacity: 0;">hapus</label>
-                                                <button class="form-control btn btn-danger">x</button>
+                                                <button class="form-control btn btn-danger hapus">x</button>
                                             </div>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                                 $data=json_decode($kategori->data_template,true);
                                     
                                 @endphp
-                                <div class="form-group row">
+                                <div class="form-group row input-wrapwrap">
                                         <div class="row col-auto" style="flex: 1 1 1px;">
                                             <div class="col-6">
                                                 <label>Nama</label>
@@ -196,7 +196,7 @@
                                         <div class="col-auto">
                                             <div class="form-gorup row">
                                                 <label style="opacity: 0;">hapus</label>
-                                                <button class="form-control btn btn-danger">x</button>
+                                                <button class="form-control btn btn-danger hapus">x</button>
                                             </div>
                                         </div>
                                     </div>

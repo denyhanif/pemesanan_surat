@@ -29,6 +29,8 @@ Route::group(['prefix' => 'Administrator', 'middleware' => 'auth'], function () 
     Route::resource('kategori', 'kategoriSuratController');
     Route::get('kategori/data/{id}','kategoriSuratController@data')->name('kategori.data');//  m
     Route::resource('pengajuan', 'dataPengajuanController');
+    Route::get('/pengajuan/{id}', 'dataPengajuanController@index')->name('list.kategori.pengajuan');
+
     Route::get('/riwayat', 'HomeController@riwayat')->name('riwayat.pengajuan');
     Route::get('/list-kategori/{id}', 'HomeController@listkategori')->name('list.kategori');
     Route::get('/list-kategori/data/{pesanan}', 'HomeController@listdatakategori')->name('list.kategori.data');
@@ -62,7 +64,7 @@ Route::group(['prefix' => 'member', 'namespace' => 'Warga'], function() {
 
 
     Route::group(['middleware' => 'warga'], function () {
-        Route::get('/print/{id}', 'wargaController@print')->name('print.surat.warga');
+        Route::get('/print/{id}', 'WargaController@print')->name('print.surat.warga');
         Route::get('dashboard', 'WargaController@dashboard')->name('warga.dashboard');
         Route::get('home', 'WargaController@home')->name('warga.home');
         Route::get('logout', 'WargaController@logout')->name('warga.logout');

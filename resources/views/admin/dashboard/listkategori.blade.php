@@ -43,8 +43,10 @@
                     @php
                         $no =1;
                     @endphp
-                    @forelse ($pengajuan as $row)  
-                        @if($row->pesanan->status !=4)
+                    @forelse ($pengajuan as $row)
+                  
+                        @if( $row->pesanan->is_ambil == 0)
+
                                           <tr>
                                 <th scope="row">{{ $no++ }}</th>
                                 <td>{{ $row->nama_pemesan }}</td>
@@ -117,41 +119,24 @@
           <div class="col-md-12 ">
             <h6 class="modal-title">Nama Pemesan</h6>
           </div>
-          <input type="text" class="form-control col-md-6 mb-2"  id="nama_pemesan">
 
-          {{--  <table class="table table-bordered">
-            <tbody>
-              <div class="col-md-12 text-center">
-                <h5>Kategori Surat</h5>
-                <b id="kategori"></b>
-              </div>
-              <tr>
-                <th>nama</th>
-                <td><span id="nama"></span></td>
-              </tr>
-              <tr>
-                <th>nik</th>
-                <td><span id="nik"></span></td>
-              </tr>
-              <tr>
-                <th>alamat</th>
-                <td><span id="alamat"></span></td>
-              </tr>
-            </tbody>
-          </table>  --}}
-          
-            <div class="row "id="modal-pesanan">
-
-            </div>
-      </div>
-      <div class=" modal-footer ">
-              <form action="{{ route('send.verifikasi') }}" method="POST">
+          <form  id="id_pengajuanupdate" method="POST">
+                  @method('PUT')
                   @csrf
+                    <input type="text" class="form-control col-md-6 mb-2" name="nama"  id="nama_pemesan">
+
+                    <div class="row "id="modal-pesanan">
+
+                    </div>
                   <input type="hidden" name="id_pesanan" id="idpesan">
                   <input type="hidden" name="id_pengaju" id="idpengaju">
                 
                   <button type="submit" class="btn btn-primary">Verifikasi Data</button>
               </form>
+           
+      </div>
+      <div class=" modal-footer ">
+             
               <form action="{{ route('tolak') }}" method="POST">
                 @csrf
                 <input type="hidden" name="idpesantolak" id="idtolak">
@@ -176,6 +161,7 @@
 <script>
   $(document).ready(function() {
     $(document).on('click', '#set-verifikasi', function() {
+      $('#id_pengajuanupdate').attr('action','{{ route('pengajuan.update',['']) }}/'+$(this).data('idpengaju'))
       var id = $(this).data('idpesan')
             $.ajax({
               url: "{{ url('Administrator/list-kategori/data/') }}/"+id,

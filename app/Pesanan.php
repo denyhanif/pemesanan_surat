@@ -14,8 +14,8 @@ class Pesanan extends Model
         return $this->belongsTo(DataPengajuan::class,'data_pengajuan_id');
     }
 
-     public function user()
-   {
-        return $this->hasOne(User::class, 'id', 'pemverifikasi_id');
-    }
+//      public function user()
+//    {
+//         return $this->hasOne(User::class, 'id', 'pemverifikasi_id');
+//     }
 }

@@ -39,7 +39,8 @@
                     @endif
                   </td>
                   <td>{{ $row->tanggal_jadi() }}</td>
-                  <td>{!! $row->status_label !!}</td>
+                  <td>
+                    {!! $row->status_label !!}</td>
                   <td>
                     @if( $row->pesanan->status==2)
                     <a target="_blank" class="btn btn-success" href="{{ route('print.surat.warga', $row->id) }}">Unduh</a>

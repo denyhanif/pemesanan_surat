@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\KategoriSurat;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\softDeletes;
 
 use Illuminate\Support\Facades\View;
 
@@ -159,13 +160,13 @@ class kategoriSuratController extends Controller
      */
     public function update(Request $request, $id)
     {
-               // dd($request->all());
+               //dd($request->all());
         //dd($request->all());
         $input= $request->all();
         //dd($input);
         if(array_key_exists('data',$input)){
             $data= $input['data'];
-             $data['nama']= array_map(function($data){       
+            $data['nama']= array_map(function($data){       
         return str_replace(' ','_',strtolower(trim($data))) ;
         //return $data;
         },$data['nama']);//data[]
@@ -224,6 +225,7 @@ class kategoriSuratController extends Controller
 
         // },$nama);
         $kategori = KategoriSurat::find($id);
+        
         $kategori->update([
             'nama' => $input['nama_kategori'],
             'kop_surat'=>$input['kop_surat'],

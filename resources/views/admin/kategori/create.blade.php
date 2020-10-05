@@ -78,7 +78,7 @@
                                 <div class="col-md-3 form-group m-1">
 
                                 <label class="text-sm mb-0" for="formGroupExampleInput">Jarak Atas</label>
-                                <input type="number" class="form-control @error('margin_atas') is-invalid @enderror" name="margin_atas" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                <input type="number" class="form-control @error('margin_atas') is-invalid @enderror" name="margin_atas" id="formGroupExampleInput" placeholder=" cm" value="">
                                     @error('margin_atas')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -88,7 +88,7 @@
 
                                 <div class="col-md-3 form-group m-1">
                                     <label class="text-sm mb-0" for="formGroupExampleInput"> Jarak Bawah</label>
-                                    <input type="number" class="form-control @error('margin_bawah') is-invalid @enderror" name="margin_bawah" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                    <input type="number" class="form-control @error('margin_bawah') is-invalid @enderror" name="margin_bawah" id="formGroupExampleInput" placeholder=" cm" value="">
                                         @error('margin_bawah')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -97,7 +97,7 @@
                                 </div>
                                   <div class="col-md-3 form-group m-1">
                                     <label class="text-sm mb-0" for="formGroupExampleInput">jarak kanan</label>
-                                    <input type="number" class="form-control @error('margin_kekanan') is-invalid @enderror" name="margin_kekanan" id="formGroupExampleInput" placeholder="Ukuran cm" value="0">
+                                    <input type="number" class="form-control @error('margin_kekanan') is-invalid @enderror" name="margin_kekanan" id="formGroupExampleInput" placeholder=" cm" value="">
                                         @error('margin_kekanan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
